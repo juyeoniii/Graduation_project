@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    android:background="#F5ECC7"
+    tools:context=".TumtumActivity">
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
