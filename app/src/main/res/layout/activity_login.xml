@@ -21,7 +21,7 @@
             android:layout_marginRight="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ID를 입력하세요"
+            android:hint="ID를 입력하세요."
             ></EditText>
 
         <EditText
@@ -30,7 +30,7 @@
             android:layout_marginRight="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="비밀번호를 입력하세요"
+            android:hint="비밀번호를 입력하세요."
             ></EditText>
 
         <LinearLayout
