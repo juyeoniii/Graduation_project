@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.Activity;
@@ -17,34 +16,21 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Shader;
-import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class TumtumActivity extends AppCompatActivity {
+public class StrawActivity extends AppCompatActivity {
 
 
     private static final int MY_PERMISSION_STORAGE = 1111 ;
@@ -52,22 +38,19 @@ public class TumtumActivity extends AppCompatActivity {
     public static final int PICK_IMAGE = 1001;
 
 
-    Button btn_capture;
-    Button gotum;
-    ImageView iv_view;
+    ImageButton Straw_capture;
     Bitmap imageBitmap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tumtum);
+        setContentView(R.layout.activity_straw);
 
+        Straw_capture = (ImageButton)findViewById(R.id.straw_capture);
 
-        btn_capture = (Button) findViewById(R.id.btn_capture);
-        iv_view = (ImageView) findViewById(R.id.iv_view1);
-        gotum =(Button)findViewById(R.id.gotum);
-
-        btn_capture.setOnClickListener(new View.OnClickListener(){
+        Straw_capture.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 checkPermission();
@@ -113,7 +96,7 @@ public class TumtumActivity extends AppCompatActivity {
                 in.close();
                 imageBitmap = rotateImage(imageBitmap, 90);
                 imageBitmap = gallerymark(imageBitmap,"songjimin");
-                iv_view.setImageBitmap(imageBitmap);
+                Straw_capture.setImageBitmap(imageBitmap);
             }catch(Exception e){
 
             }
@@ -123,7 +106,7 @@ public class TumtumActivity extends AppCompatActivity {
             imageBitmap = (Bitmap) extras.get("data");
             imageBitmap = rotateImage(imageBitmap, 90);
             imageBitmap = cameramark(imageBitmap,"songjimin");
-            iv_view.setImageBitmap(imageBitmap);
+            Straw_capture.setImageBitmap(imageBitmap);
         }
     }
     public static Bitmap rotateImage(Bitmap source, float angle) {
@@ -216,7 +199,7 @@ public class TumtumActivity extends AppCompatActivity {
                 for (int i = 0; i < grantResults.length; i++) {
                     // grantResults[] : 허용된 권한은 0, 거부한 권한은 -1
                     if (grantResults[i] < 0) {
-                        Toast.makeText(TumtumActivity.this, "해당 권한을 활성화 하셔야 합니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(StrawActivity.this, "해당 권한을 활성화 하셔야 합니다.", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
@@ -237,38 +220,13 @@ public class TumtumActivity extends AppCompatActivity {
     public Bitmap StringToBitMap(String encodedString){
         try{
             byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
         }catch(Exception e){
             e.getMessage();
             return null;
         }
     } // StringToBitMap
-
-
-
-
-
-    public void onButtonGotum(View v){
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 4;
-        Bitmap bitmap = ((BitmapDrawable)iv_view.getDrawable()).getBitmap();
-
-        float scale = (float) (2048/(float)bitmap.getWidth());
-        int image_w = (int) (bitmap.getWidth() * scale);
-        int image_h = (int) (bitmap.getHeight() * scale);
-        Bitmap resize = Bitmap.createScaledBitmap(bitmap, image_w, image_h, true);
-        resize.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-
-
-        Intent intent = new Intent(TumtumActivity.this, TumblerActivity.class);
-        intent.putExtra("image", byteArray);
-        startActivity(intent);
-
-    }
-
 
 
     public void onButton1Clicked(View v){
@@ -280,5 +238,4 @@ public class TumtumActivity extends AppCompatActivity {
         Intent myIntent = new Intent(getApplicationContext(),CertificationActivity.class);
         startActivity(myIntent);
     }
-
 }

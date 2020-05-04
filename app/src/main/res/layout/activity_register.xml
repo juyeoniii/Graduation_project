@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <LinearLayout
+        android:background="#CCEEB8"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="265dp">
+
+        <EditText
+            android:id="@+id/idregister"
+            android:layout_marginTop="120dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID를 입력하세요"
+            ></EditText>
+
+        <EditText
+            android:id="@+id/pwregister"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="비밀번호를 입력하세요"
+            ></EditText>
+        <EditText
+            android:id="@+id/pwcheck"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="비밀번호를 한번 더 입력하세요"
+            ></EditText>
+
+        <Button
+            android:id="@+id/bt_Join"
+            android:layout_width="173dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:layout_gravity="center"
+            android:onClick="bt_Join"
+            android:text="Join"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@+id/pwcheck"
+            tools:ignore="HardcodedText" />
+
+
+
+    </LinearLayout>
+</LinearLayout>

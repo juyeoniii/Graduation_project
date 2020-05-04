@@ -9,7 +9,7 @@
 
 
     <ImageButton
-        android:onClick="onButtontumbler"
+        android:onClick="onButtonTumbler"
         android:id="@+id/tumblerbtn"
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -20,7 +20,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/tumbler"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></ImageButton>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tumbler"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/strowbtn"
+        android:id="@+id/strawbtn"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginEnd="40dp"
@@ -42,6 +42,7 @@
         android:layout_marginTop="60dp"
         android:background="#F5ECC7"
         android:scaleType="fitXY"
+        android:onClick="onButtonStraw"
         android:src="@drawable/paperstrow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tumblerbtn"
@@ -49,7 +50,7 @@
 
 
     <TextView
-        android:id="@+id/strow"
+        android:id="@+id/straw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="18dp"

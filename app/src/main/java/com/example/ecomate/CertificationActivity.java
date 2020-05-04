@@ -21,8 +21,13 @@ public class CertificationActivity extends AppCompatActivity {
     }
 
 
-    public void onButtontumbler(View v){
-        Intent myIntent = new Intent(getApplicationContext(),TumblerActivity.class);
+    public void onButtonTumbler(View v){
+        Intent myIntent = new Intent(getApplicationContext(),TumtumActivity.class);
+        startActivity(myIntent);
+    }
+
+    public void onButtonStraw(View v){
+        Intent myIntent = new Intent(getApplicationContext(),StrawActivity.class);
         startActivity(myIntent);
     }
 
