@@ -65,8 +65,11 @@ public class RegisterActivity extends AppCompatActivity {
                 String pwck = mEditTextpwck.getText().toString();
                 String email = mEditTextemail.getText().toString();
 
-                InsertData task = new InsertData();
-                task.execute("http://" + IP_ADDRESS + "/insert2.php", name,id,pw,pwck,email);
+                if(pw.equals(pwck))
+                {
+                    InsertData task = new InsertData();
+                    task.execute("http://" + IP_ADDRESS + "/insert2.php", name,id,pw,pwck,email);
+                }
 
 
                 mEditTextName.setText("");
@@ -80,6 +83,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    public void onClick(View view)
+    {
+        finish();
+    }
+
 
 
     class InsertData extends AsyncTask<String, Void, String>{
@@ -88,21 +96,17 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
             progressDialog = ProgressDialog.show(RegisterActivity.this,
                     "Please Wait", null, true, true);
         }
 
-
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
             progressDialog.dismiss();
             mTextViewresult.setText(result);
             Log.d(TAG, "POST response  - " + result);
         }
-
 
         @Override
         protected String doInBackground(String... params) {
@@ -110,12 +114,10 @@ public class RegisterActivity extends AppCompatActivity {
             String name = (String)params[1];
             String id = (String)params[2];
             String pw = (String)params[3];
-            String pwck = (String)params[4];
             String email = (String)params[5];
 
             String serverURL = (String)params[0];
-            String postParameters = "name=" + name + "&id=" + id + "&pw=" + pw + "&pwck=" + pwck + "&email=" + email;
-
+            String postParameters = "name=" + name + "&id=" + id + "&pw=" + pw + "&email=" + email;
 
             try {
 

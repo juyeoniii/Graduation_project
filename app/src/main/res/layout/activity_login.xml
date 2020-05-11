@@ -14,53 +14,85 @@
         tools:layout_editor_absoluteX="25dp"
         tools:layout_editor_absoluteY="145dp">
 
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="80dp"
+            android:layout_height="34dp"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginRight="100dp"
+            android:background="#F5ECC7"
+            android:text="로그인"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+
         <EditText
             android:id="@+id/idwrite"
-            android:layout_marginTop="215dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="50dp"
             android:hint="ID를 입력하세요."
-            ></EditText>
+            android:textColor="#8C8989"
+            android:textColorLink="#FFFFFF"></EditText>
 
         <EditText
             android:id="@+id/pwwrite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
+            android:hint="비밀번호를 입력하세요."
+            android:textColor="#8C8989"></EditText>
+
+        <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="비밀번호를 입력하세요."
-            ></EditText>
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="100dp"
+            android:text="자동로그인" />
 
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:layout_height="39dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
             <Button
-
-                android:layout_marginLeft="50dp"
+                android:id="@+id/loginbt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#ffffffff"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="30dp"
+                android:background="#3A3A37"
+                android:onClick="lgbtn"
                 android:text="로그인"
-                android:id="@+id/loginbt"
-                ></Button>
+
+                android:textColor="#FFFFFF"
+                android:textColorHighlight="#FFFFFF"></Button>
+
             <Button
-                android:layout_marginRight="50dp"
-                android:layout_marginLeft="10dp"
+                android:id="@+id/register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#ffffffff"
-                android:text="회원가입">
+                android:layout_marginRight="50dp"
+                android:onClick="rgbtn"
+                android:text="회원가입"
+                android:background="#3A3A37"
+                android:textColor="#FFFFFF"
+                android:textColorHighlight="#FFFFFF">>
 
             </Button>
 
 
+
+
         </LinearLayout>
+
+
 
 
     </LinearLayout>

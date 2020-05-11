@@ -58,6 +58,7 @@ public class TumtumActivity extends AppCompatActivity {
     Bitmap imageBitmap;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tumtum);
@@ -165,13 +166,6 @@ public class TumtumActivity extends AppCompatActivity {
 
         return result;
     }
-
-
-
-
-
-
-
 
 
 
