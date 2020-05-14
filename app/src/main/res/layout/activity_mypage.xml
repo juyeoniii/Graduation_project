@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MypageActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="145dp">
+
+
+        <TextView
+            android:id="@+id/mypage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="100dp"
+            android:text="마이페이지"
+            android:textSize="16sp"
+            tools:layout_editor_absoluteX="156dp"
+            tools:layout_editor_absoluteY="53dp" />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="143dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:background="#FDFDFD"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/people" />
+
+
+
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="20dp"
+                    android:hint="닉네임"
+
+                    android:textColor="#000000"
+                    android:textColorHint="#090909"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="10dp"
+                    android:text="포인트 :"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:text="추천인코드"
+                    android:textColor="#040404" />
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_marginTop="265dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="64dp"
+                android:layout_height="58dp"
+                android:background="@android:color/transparent"
+                android:padding="11dp"
+                android:scaleType="fitXY"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/icon2"
+
+                ></ImageButton>
+
+            <ImageButton
+                android:layout_width="64dp"
+                android:layout_height="58dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:onClick="onButton2Clicked"
+                android:padding="11dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon4"
+
+                ></ImageButton>
+
+            <ImageButton
+                android:layout_width="64dp"
+                android:layout_height="58dp"
+
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:padding="11dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon3"
+
+                ></ImageButton>
+
+            <ImageButton
+                android:layout_width="64dp"
+                android:layout_height="58dp"
+
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:padding="11dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon1"
+
+                ></ImageButton>
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

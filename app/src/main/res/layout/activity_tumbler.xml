@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#F5ECC7"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TumblerActivity">
@@ -81,6 +81,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
         android:background="#727470"
+        android:onClick="onButtonTumrcp"
 
         android:src="@drawable/add"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,23 +104,23 @@
 
         <ImageButton
             android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_weight="1"
+            android:layout_height="58dp"
             android:background="@android:color/transparent"
-            android:onClick="onButton1Clicked"
-            android:padding="14dp"
+            android:padding="11dp"
             android:scaleType="fitXY"
+            android:layout_marginRight="10dp"
             android:src="@drawable/icon2"
 
-
-            />
+            ></ImageButton>
 
         <ImageButton
             android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_weight="1"
+            android:layout_height="58dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
-            android:padding="14dp"
+            android:onClick="onButton2Clicked"
+            android:padding="11dp"
             android:scaleType="fitXY"
             android:src="@drawable/icon4"
 
@@ -127,23 +128,27 @@
 
         <ImageButton
             android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_weight="1"
+            android:layout_height="58dp"
+
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="8dp"
             android:background="@android:color/transparent"
-            android:padding="14dp"
+            android:padding="11dp"
             android:scaleType="fitXY"
-            android:src="@drawable/icon1"
+            android:src="@drawable/icon3"
 
             ></ImageButton>
 
         <ImageButton
             android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_weight="1"
+            android:layout_height="58dp"
+
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:background="@android:color/transparent"
-            android:padding="14dp"
+            android:padding="11dp"
             android:scaleType="fitXY"
-            android:src="@drawable/icon3"
+            android:src="@drawable/icon1"
 
             ></ImageButton>
 

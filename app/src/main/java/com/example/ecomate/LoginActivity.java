@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DownloadManager;
 import android.app.Notification;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,32 +33,40 @@ import java.net.URL;
 public class LoginActivity extends AppCompatActivity {
     String id, pw, pwck, email;
 
-    private EditText mEditTextName;
-    private EditText mEditTextId;
-    private EditText mEditTextpw;
-    private EditText mEditTextpwck;
-    private EditText mEditTextemail;
+    EditText mEditTextName;
+    EditText mEditTextId;
+    EditText mEditTextpw;
+    EditText mEditTextpwck;
+    EditText mEditTextemail;
+
+    final Context context = this;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mEditTextId = (EditText) findViewById(R.id.idwrite);
+        mEditTextpw = (EditText) findViewById(R.id.pwwrite);
     }
-    public void lgbtn(View view)
+
+    public void lgbtn(View v)
     {
-        try{
-            id = mEditTextName.getText().toString();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+/*        try{
+            id = mEditTextId.getText().toString();
             pw = mEditTextpw.getText().toString();
         }catch (NullPointerException e)
         {
             Log.e("err",e.getMessage());
         }
 
+
         loginDB lDB = new loginDB();
         lDB.execute();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
 
     }
 
@@ -64,16 +74,75 @@ public class LoginActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
-
     }
 
     public class loginDB extends AsyncTask<Void, Integer, Void> {
-        String data ="";
+
+        String data = "";
+
+
+        @Override
+        protected Void doInBackground(Void... unused) {
+
+
+            String param = "id=" + id + "&id=" + pw +"";
+            Log.e("POST",param);
+            try {
+
+                URL url = new URL(
+                        "http://192.168.0.2/insert3.php");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.connect();
+
+
+                OutputStream outs = conn.getOutputStream();
+                outs.write(param.getBytes("UTF-8"));
+                outs.flush();
+                outs.close();
+
+
+                InputStream is = null;
+                BufferedReader in = null;
+
+                is = conn.getInputStream();
+                in = new BufferedReader(new InputStreamReader(is), 8 * 1024);
+                String line = null;
+                StringBuffer buff = new StringBuffer();
+                while ( ( line = in.readLine() ) != null )
+                {
+                    buff.append(line + "\n");
+                }
+                data = buff.toString().trim();
+
+
+                Log.e("RECV DATA",data);
+
+                if(data.equals("0"))
+                {
+                    Log.e("RESULT","성공적으로 처리되었습니다!");
+                }
+                else
+                {
+                    Log.e("RESULT","에러 발생! ERRCODE = " + data);
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
 
-            Dialog alertBuilder;
             if(data.equals("1"))
             {
                 Log.e("RESULT","성공적으로 처리되었습니다!");
@@ -84,13 +153,13 @@ public class LoginActivity extends AppCompatActivity {
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(this, MainActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
                         });
-               // AlertDialog dialog = alertBuilder.create();
-               // dialog.show();
+                AlertDialog dialog = alertBuilder.create();
+                dialog.show();
             }
             else if(data.equals("0"))
             {
@@ -105,8 +174,8 @@ public class LoginActivity extends AppCompatActivity {
                                 //finish();
                             }
                         });
-               // AlertDialog dialog = alertBuilder.create();
-                // dialog.show();
+                AlertDialog dialog = alertBuilder.create();
+                dialog.show();
             }
             else
             {
@@ -118,72 +187,17 @@ public class LoginActivity extends AppCompatActivity {
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //finish();
+                                finish();
                             }
                         });
                 AlertDialog dialog = alertBuilder.create();
                 dialog.show();
             }
         }
+*/
+    }
 
-   //     @Override
-   //     protected Void doInBackground(Void... unused) {
 
-            /* 인풋 파라메터값 생성 */
-       //     String param = "id=" + id + "&pw=" + pw + "";
-     //       Log.e("POST",param);
-         //   try {
-                /* 서버연결 */
-           //     URL url = new URL(
-         //               "http://10.0.2.2/insert3.php");
-           //     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-             //   conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-               // conn.setRequestMethod("POST");
-        //        conn.setDoInput(true);
-          //      conn.connect();
 
-                /* 안드로이드 -> 서버 파라메터값 전달 */
-            //    OutputStream outs = conn.getOutputStream();
-              //  outs.write(param.getBytes("UTF-8"));
-                //outs.flush();
-              //  outs.close();
-
-                /* 서버 -> 안드로이드 파라메터값 전달 */
-              //  InputStream is = null;
-              //  BufferedReader in = null;
-              //  String data = "";
-
-           //     is = conn.getInputStream();
-             //   in = new BufferedReader(new InputStreamReader(is), 8 * 1024);
-           //     String line = null;
-             //   StringBuffer buff = new StringBuffer();
-               // while ( ( line = in.readLine() ) != null )
-             //   {
-               //     buff.append(line + "\n");
-            //    }
-              //  data = buff.toString().trim();
-
-                /* 서버에서 응답 */
-//                Log.e("RECV DATA",data);
-
-         //       if(data.equals("0"))
-           //     {
-             //       Log.e("RESULT","성공적으로 처리되었습니다!");
-               // }
-               // else
-               // {
-                 //   Log.e("RESULT","에러 발생! ERRCODE = " + data);
-               // }
-
-           // } catch (MalformedURLException e) {
-            //    e.printStackTrace();
-           // } catch (IOException e) {
-             //   e.printStackTrace();
-           // }
-
-        //    return null;
-      //  }
-
-  //  }
 
 }

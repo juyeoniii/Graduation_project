@@ -40,6 +40,11 @@ public class TumblerActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
+    public void onButtonTumrcp(View v){
+        Intent myIntent = new Intent(getApplicationContext(),TumrcpActivity.class);
+        startActivity(myIntent);
+    }
+
 
 
 
