@@ -15,7 +15,7 @@
         tools:layout_editor_absoluteY="145dp">
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/textlogin"
             android:layout_width="80dp"
             android:layout_height="34dp"
             android:layout_marginLeft="120dp"
@@ -28,18 +28,20 @@
 
 
         <EditText
-            android:id="@+id/idwrite"
+            android:id="@+id/et_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="60dp"
             android:layout_marginRight="50dp"
             android:hint="ID를 입력하세요."
+            android:inputType="textPersonName"
             android:textColor="#8C8989"
             android:textColorLink="#FFFFFF"></EditText>
 
         <EditText
-            android:id="@+id/pwwrite"
+            android:id="@+id/et_pass"
+            android:inputType="textPersonName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
@@ -62,24 +64,22 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/loginbt"
+                android:id="@+id/btn_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="30dp"
                 android:background="#3A3A37"
-                android:onClick="lgbtn"
                 android:text="로그인"
 
                 android:textColor="#FFFFFF"
                 android:textColorHighlight="#FFFFFF"></Button>
 
             <Button
-                android:id="@+id/register"
+                android:id="@+id/btn_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="50dp"
-                android:onClick="rgbtn"
                 android:text="회원가입"
                 android:background="#3A3A37"
                 android:textColor="#FFFFFF"
