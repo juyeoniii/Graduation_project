@@ -1,13 +1,6 @@
 package com.example.ecomate;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,13 +14,16 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Base64;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import java.io.InputStream;
 
 public class StrawActivity extends AppCompatActivity {
@@ -58,6 +54,7 @@ public class StrawActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
 
@@ -97,6 +94,7 @@ public class StrawActivity extends AppCompatActivity {
                 imageBitmap = rotateImage(imageBitmap, 90);
                 imageBitmap = gallerymark(imageBitmap,"songjimin");
                 Straw_capture.setImageBitmap(imageBitmap);
+
             }catch(Exception e){
 
             }
@@ -109,6 +107,7 @@ public class StrawActivity extends AppCompatActivity {
             Straw_capture.setImageBitmap(imageBitmap);
         }
     }
+
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
@@ -148,15 +147,6 @@ public class StrawActivity extends AppCompatActivity {
 
         return result;
     }
-
-
-
-
-
-
-
-
-
 
 
     private void checkPermission(){
@@ -209,24 +199,6 @@ public class StrawActivity extends AppCompatActivity {
         }
     }
 
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    } // BiteMapToString
-
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        }catch(Exception e){
-            e.getMessage();
-            return null;
-        }
-    } // StringToBitMap
 
 
     public void onButton1Clicked(View v){

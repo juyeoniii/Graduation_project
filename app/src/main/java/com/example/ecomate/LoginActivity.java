@@ -54,15 +54,16 @@ public class LoginActivity extends AppCompatActivity {
                                 String userID = jasonObject.getString("userID");
                                 String userPass = jasonObject.getString("userPassword");
                                 Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, MypageActivity.class);
                                 intent.putExtra("log", "User");
                                 intent.putExtra("userID", userID);
+                                intent.putExtra("userPassword", userPass);
                                 startActivity(intent);
                             }
 
 
                             else{//회원등록 실패한 경우
-                                Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "아이디 또는 비밀번호를 다시 입력하세요", Toast.LENGTH_SHORT).show();
                                 return;
 
                             }

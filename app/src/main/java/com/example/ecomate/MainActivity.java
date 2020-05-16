@@ -1,11 +1,10 @@
 package com.example.ecomate;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,12 +15,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onButton2Clicked(View v){
-        Intent myIntent = new Intent(getApplicationContext(),CertificationActivity.class);
+    public void hmbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(myIntent);
     }
 
-    public void mpbtn(View v){
+    public void cmrbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
+        startActivity(myIntent);
+    }
+
+    public void scbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
+        startActivity(myIntent);
+    }
+
+    public void mpbtn(View v) {
         Intent myIntent = new Intent(getApplicationContext(), MypageActivity.class);
         startActivity(myIntent);
     }
