@@ -24,6 +24,11 @@ public class CertificationActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
+    public void onButtonMeal(View v){
+        Intent myIntent = new Intent(getApplicationContext(),VegiActivity.class);
+        startActivity(myIntent);
+    }
+
     public void hmbtn(View v) {
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(myIntent);
