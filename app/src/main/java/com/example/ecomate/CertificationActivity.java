@@ -1,5 +1,6 @@
 package com.example.ecomate;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,14 @@ public class CertificationActivity extends AppCompatActivity {
         Intent myIntent = new Intent(getApplicationContext(),VegiActivity.class);
         startActivity(myIntent);
     }
+
+    public void onButtonWalk(View v){
+        Intent myIntent = new Intent(getApplicationContext(),WalkActivity.class);
+        startActivity(myIntent);
+    }
+
+
+
 
     public void hmbtn(View v) {
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);

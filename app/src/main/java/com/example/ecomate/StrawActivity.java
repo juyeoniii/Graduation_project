@@ -91,7 +91,6 @@ public class StrawActivity extends AppCompatActivity {
                 InputStream in = getContentResolver().openInputStream(data.getData());
                 imageBitmap = BitmapFactory.decodeStream(in);
                 in.close();
-                imageBitmap = rotateImage(imageBitmap, 90);
                 imageBitmap = gallerymark(imageBitmap,"songjimin");
                 Straw_capture.setImageBitmap(imageBitmap);
 
@@ -201,13 +200,23 @@ public class StrawActivity extends AppCompatActivity {
 
 
 
-    public void onButton1Clicked(View v){
-        Intent myIntent = new Intent(getApplicationContext(),MainActivity.class);
+    public void hmbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(myIntent);
     }
 
-    public void onButton2Clicked(View v){
-        Intent myIntent = new Intent(getApplicationContext(),CertificationActivity.class);
+    public void cmrbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
+        startActivity(myIntent);
+    }
+
+    public void scbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
+        startActivity(myIntent);
+    }
+
+    public void mpbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), MypageActivity.class);
         startActivity(myIntent);
     }
 }

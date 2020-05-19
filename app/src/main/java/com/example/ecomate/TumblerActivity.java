@@ -30,21 +30,26 @@ public class TumblerActivity extends AppCompatActivity {
 
     }
 
-    public void onButton1Clicked(View v){
-        Intent myIntent = new Intent(getApplicationContext(),MainActivity.class);
+
+    public void hmbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(myIntent);
     }
 
-    public void onButtonTumTum(View v){
-        Intent myIntent = new Intent(getApplicationContext(),TumtumActivity.class);
+    public void cmrbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
         startActivity(myIntent);
     }
 
-    public void onButtonTumrcp(View v){
-        Intent myIntent = new Intent(getApplicationContext(),TumrcpActivity.class);
+    public void scbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
         startActivity(myIntent);
     }
 
+    public void mpbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), MypageActivity.class);
+        startActivity(myIntent);
+    }
 
 
 

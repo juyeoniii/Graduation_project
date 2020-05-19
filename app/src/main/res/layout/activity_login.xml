@@ -12,19 +12,26 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="25dp"
-        tools:layout_editor_absoluteY="145dp">
+        tools:layout_editor_absoluteY="145dp"><![CDATA[
 
-        <TextView
-            android:id="@+id/textlogin"
-            android:layout_width="80dp"
-            android:layout_height="34dp"
-            android:layout_marginLeft="120dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginRight="100dp"
 
-            android:text="로그인"
-            android:textColor="@android:color/black"
-            android:textSize="24sp" />
+
+
+            />
+
+        ]]>
+
+
+
+
+        <ImageView
+            android:layout_marginTop="60dp"
+            android:id="@+id/imageView2"
+            android:layout_gravity="center"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:srcCompat="@drawable/ecomatelogo" />
+
 
 
         <EditText
@@ -32,9 +39,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="50dp"
             android:hint="ID를 입력하세요."
+            android:textSize="15dp"
             android:inputType="textPersonName"
             android:textColor="#8C8989"
             android:textColorLink="#FFFFFF"></EditText>
@@ -47,6 +55,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
             android:hint="비밀번호를 입력하세요."
+            android:textSize="15dp"
             android:textColor="#8C8989"></EditText>
 
         <CheckBox
@@ -55,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="100dp"
+            android:textSize="13dp"
             android:text="자동로그인" />
 
         <LinearLayout
@@ -65,13 +75,13 @@
 
             <Button
                 android:id="@+id/btn_login"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginRight="10dp"
                 android:background="#3A3A37"
                 android:text="로그인"
-
+                android:textSize="13dp"
                 android:textColor="#FFFFFF"
                 android:textColorHighlight="#FFFFFF"></Button>
 
@@ -80,6 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="50dp"
+                android:textSize="13dp"
                 android:text="회원가입"
                 android:background="#3A3A37"
                 android:textColor="#FFFFFF"

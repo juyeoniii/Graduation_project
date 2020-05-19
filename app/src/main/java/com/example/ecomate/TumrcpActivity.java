@@ -1,48 +1,52 @@
 package com.example.ecomate;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.Settings;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.util.Base64;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.googlecode.tesseract.android.TessBaseAPI;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.Shader;
-import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.os.Parcelable;
-import android.provider.MediaStore;
-import android.provider.Settings;
-import android.util.Base64;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class TumrcpActivity extends AppCompatActivity {
 
@@ -51,22 +55,31 @@ public class TumrcpActivity extends AppCompatActivity {
     private static final int CAPTURE_IMAGE =2222 ;
     public static final int PICK_IMAGE = 1001;
 
-
-    Button btn_capture;
-    Button gotum;
-    ImageView iv_view;
+    TessBaseAPI tess;
+    String dataPath="";
+    ImageButton btn_capture;
     Bitmap imageBitmap;
+    Button button,combtn;
+    Bitmap image;
+    String OCRresult = null;
+    TextView OCRTextView;
+    String newString;
+
+
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tumtum);
+        setContentView(R.layout.activity_tumrcp);
 
 
-        btn_capture = (Button) findViewById(R.id.btn_capture);
-        iv_view = (ImageView) findViewById(R.id.iv_view1);
-        gotum =(Button)findViewById(R.id.gotum);
+        btn_capture = (ImageButton) findViewById(R.id.recieptview);
+        button = (Button) findViewById(R.id.ocrbtn);
+        OCRTextView =(TextView) findViewById(R.id.ocrview);
+        combtn = (Button) findViewById(R.id.combtn);
+
+
+        // 영수증 사진 불러오기
 
         btn_capture.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -77,7 +90,154 @@ public class TumrcpActivity extends AppCompatActivity {
             }
         });
 
+
+        // 영수증 인식하기
+
+        String lang = "kor+eng";
+        dataPath = getFilesDir()+"/tesseract/";
+        tess = new TessBaseAPI();
+
+        checkFile(new File(dataPath + "tessdata/"),"kor");
+        checkFile(new File(dataPath + "tessdata/"),"eng");
+
+        tess.init(dataPath,lang);
+
+
+
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                image = ((BitmapDrawable)btn_capture.getDrawable()).getBitmap();
+                processImage(image);
+
+            }
+        });
+
+        // 영수증 날짜 인식하고 오늘 날짜랑 비교하기
+
+        final Date today = new Date();
+        final SimpleDateFormat sdf0,sdf1,sdf2,sdf3;
+
+        sdf0 = new SimpleDateFormat("yyyy/MM/dd");
+        sdf1 = new SimpleDateFormat("yyyy.MM.dd");
+        sdf2 = new SimpleDateFormat("yyyy MM dd");
+        sdf3 = new SimpleDateFormat("yyyy-MM-dd");
+
+        //System.out.println(sdf0.format(today)); - 오늘
+        // newString 이 인식 날짜
+
+
+        //@@@ 애뮬레이터 시간 변경해줘야 날짜 맞는지 확인 가능 @@@
+        combtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                if((newString == sdf0.format(today))||(newString == sdf1.format(today))||(newString == sdf2.format(today))||(newString == sdf3.format(today))){
+                    Toast.makeText(getApplicationContext(), "인증 성공!", Toast.LENGTH_LONG).show();
+
+                } else Toast.makeText(getApplicationContext(), "인증 실패!", Toast.LENGTH_LONG).show();
+
+            }
+        });
+
+/*
+
+/*
+
+*/
+
     }
+
+
+    public void processImage(Bitmap bitmap){
+
+
+        TextView OCRTextView;
+        tess.setImage(bitmap);
+        OCRresult = tess.getUTF8Text();
+        OCRTextView =(TextView) findViewById(R.id.ocrview);
+
+
+        SpannableStringBuilder sb = new SpannableStringBuilder(OCRresult);
+
+        Pattern pattern =  Pattern.compile("(19|20)\\d{2}[- /.]*(0[1-9]|1[012])[- /.]*(0[1-9]|[12][0-9]|3[01])");
+        Matcher matcher = pattern.matcher(OCRresult);
+
+        if (matcher.find()){
+
+            newString = matcher.group();
+            sb.setSpan(new ForegroundColorSpan(Color.rgb(255, 0, 0)), matcher.start(), matcher.end(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            OCRTextView.setText(sb);
+
+        } else OCRTextView.setText("날짜를 인식하지 못하였습니다.");
+
+
+
+        /*
+        if(OCRresult.contains("할인")){
+            ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#5F00FF")),OCRresult.indexOf("할인"),OCRresult.indexOf("할인")+2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            OCRTextView.setText(ssb);
+        }else OCRTextView.setText(OCRresult);
+
+        */
+
+    }
+
+
+
+
+
+    private void copyFiles(String lang){
+        try {
+            String filepath = dataPath + "/tessdata/" + lang + ".traineddata";
+            AssetManager assetManager = getAssets();
+
+            InputStream inStream = assetManager.open("tessdata/"+lang+".traineddata");
+            OutputStream outStream = new FileOutputStream(filepath);
+
+            byte[] buffer = new byte[1024];
+            int read;
+            while((read=inStream.read(buffer))!= -1){
+                outStream.write(buffer,0,read);
+
+            }
+            outStream.flush();
+            outStream.close();
+            inStream.close();
+
+
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private void checkFile(File dir, String lang){
+        if(!dir.exists()&& dir.mkdirs()){
+            copyFiles(lang);
+        }
+
+        if(dir.exists()){
+            String datafilePath = dataPath + "/tessdata/" + lang +".traineddata";
+            File datafile = new File(datafilePath);
+            if(!datafile.exists()){
+                copyFiles(lang);
+            }
+
+        }
+    }
+
+
+
+
+
+
+
+
 
     public void photoDialogRadio(){
         final CharSequence[] PhotoModels = {"갤러리에서 가져오기","직접 찍어서 가져오기"};
@@ -112,9 +272,9 @@ public class TumrcpActivity extends AppCompatActivity {
                 InputStream in = getContentResolver().openInputStream(data.getData());
                 imageBitmap = BitmapFactory.decodeStream(in);
                 in.close();
-                imageBitmap = rotateImage(imageBitmap, 90);
-                imageBitmap = gallerymark(imageBitmap,"songjimin");
-                iv_view.setImageBitmap(imageBitmap);
+                btn_capture.setImageBitmap(imageBitmap);
+
+
             }catch(Exception e){
 
             }
@@ -123,8 +283,8 @@ public class TumrcpActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             imageBitmap = (Bitmap) extras.get("data");
             imageBitmap = rotateImage(imageBitmap, 90);
-            imageBitmap = cameramark(imageBitmap,"songjimin");
-            iv_view.setImageBitmap(imageBitmap);
+            btn_capture.setImageBitmap(imageBitmap);
+
         }
     }
     public static Bitmap rotateImage(Bitmap source, float angle) {
@@ -166,6 +326,13 @@ public class TumrcpActivity extends AppCompatActivity {
 
         return result;
     }
+
+
+
+
+
+
+
 
 
 
@@ -242,12 +409,12 @@ public class TumrcpActivity extends AppCompatActivity {
 
 
 
-
-    public void onButtonGotum(View v){
+/*
+    public void onButtontumbler(View v){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 4;
-        Bitmap bitmap = ((BitmapDrawable)iv_view.getDrawable()).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable)btn_capture.getDrawable()).getBitmap();
 
         float scale = (float) (2048/(float)bitmap.getWidth());
         int image_w = (int) (bitmap.getWidth() * scale);
@@ -263,15 +430,26 @@ public class TumrcpActivity extends AppCompatActivity {
 
     }
 
+ */
 
 
-    public void onButton1Clicked(View v){
-        Intent myIntent = new Intent(getApplicationContext(),MainActivity.class);
+    public void hmbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(myIntent);
     }
 
-    public void onButton2Clicked(View v){
-        Intent myIntent = new Intent(getApplicationContext(),CertificationActivity.class);
+    public void cmrbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
+        startActivity(myIntent);
+    }
+
+    public void scbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
+        startActivity(myIntent);
+    }
+
+    public void mpbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), MypageActivity.class);
         startActivity(myIntent);
     }
 

@@ -1,67 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
+    android:background="@drawable/back_green"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
-    <ImageView
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-
-        android:src="@drawable/little"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView"></ImageView>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="200dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="30dp"
-        android:text="내 POINT : "
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
-
-    <TextView
-        android:id="@+id/mypoint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
-        android:text="0"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="70dp"
-        android:layout_marginLeft="58dp"
-        android:layout_marginRight="70dp"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="300dp"
-        android:text="LEVEL : "
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:text="1"
-        android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
     <LinearLayout
@@ -69,65 +14,134 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="10dp"
         android:weightSum="4"
         app:layout_constraintStart_toStartOf="parent"
         >
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="#00000000"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/people" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/et_name"
+            android:textStyle="bold"
+            android:hint="popo"
+            />
+
+            >
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#454542"
+            android:text = "Point : 0 ">
+
+        </TextView>
+
+        <ImageView
+            android:layout_width="204dp"
+            android:layout_height="170dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="#00000000"
+            app:srcCompat="@drawable/sprout_3"></ImageView>
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="1단계 새싹"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="다음 단계까지 1000P 남았습니다."
+
+            ></TextView>
+
+
+
+
+
+
+
+
+
+
+
 
         <LinearLayout
-            android:layout_width="310dp"
-            android:layout_height="69dp"
-            android:orientation="horizontal">
+
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:weightSum="4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="-54dp">
+
+
 
             <ImageButton
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/button_click2"
-                android:padding="12dp"
-                android:scaleType="fitXY"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
                 android:onClick="hmbtn"
+                android:padding="14dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon2"
 
-                ></ImageButton>
+
+                />
 
             <ImageButton
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/button_click4"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
                 android:onClick="cmrbtn"
-                android:padding="12dp"
+                android:padding="14dp"
                 android:scaleType="fitXY"
+                android:src="@drawable/icon4"
 
                 ></ImageButton>
 
             <ImageButton
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/button_click3"
-                android:padding="12dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:padding="14dp"
                 android:scaleType="fitXY"
-                android:onClick="scbtn"
+                android:src="@drawable/icon3"
 
                 ></ImageButton>
 
             <ImageButton
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/button_click"
-                android:padding="12dp"
-                android:scaleType="fitXY"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
                 android:onClick="mpbtn"
+                android:padding="14dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon1"
 
                 ></ImageButton>
 
@@ -135,5 +149,6 @@
         </LinearLayout>
 
 
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
+</LinearLayout>

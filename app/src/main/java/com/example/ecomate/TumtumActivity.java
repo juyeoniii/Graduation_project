@@ -1,14 +1,6 @@
 package com.example.ecomate;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,32 +9,25 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Shader;
-import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class TumtumActivity extends AppCompatActivity {
 
@@ -52,21 +37,16 @@ public class TumtumActivity extends AppCompatActivity {
     public static final int PICK_IMAGE = 1001;
 
 
-    Button btn_capture;
-    Button gotum;
-    ImageView iv_view;
+    ImageButton btn_capture;
     Bitmap imageBitmap;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tumtum);
 
 
-        btn_capture = (Button) findViewById(R.id.btn_capture);
-        iv_view = (ImageView) findViewById(R.id.iv_view1);
-        gotum =(Button)findViewById(R.id.gotum);
+        btn_capture = (ImageButton) findViewById(R.id.btn_capture);
 
         btn_capture.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -112,9 +92,8 @@ public class TumtumActivity extends AppCompatActivity {
                 InputStream in = getContentResolver().openInputStream(data.getData());
                 imageBitmap = BitmapFactory.decodeStream(in);
                 in.close();
-                imageBitmap = rotateImage(imageBitmap, 90);
                 imageBitmap = gallerymark(imageBitmap,"songjimin");
-                iv_view.setImageBitmap(imageBitmap);
+                btn_capture.setImageBitmap(imageBitmap);
             }catch(Exception e){
 
             }
@@ -124,7 +103,7 @@ public class TumtumActivity extends AppCompatActivity {
             imageBitmap = (Bitmap) extras.get("data");
             imageBitmap = rotateImage(imageBitmap, 90);
             imageBitmap = cameramark(imageBitmap,"songjimin");
-            iv_view.setImageBitmap(imageBitmap);
+            btn_capture.setImageBitmap(imageBitmap);
         }
     }
     public static Bitmap rotateImage(Bitmap source, float angle) {
@@ -166,6 +145,13 @@ public class TumtumActivity extends AppCompatActivity {
 
         return result;
     }
+
+
+
+
+
+
+
 
 
 
@@ -242,7 +228,7 @@ public class TumtumActivity extends AppCompatActivity {
 
 
 
-
+/*
     public void onButtonGotum(View v){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -257,21 +243,36 @@ public class TumtumActivity extends AppCompatActivity {
         byte[] byteArray = stream.toByteArray();
 
 
-        Intent intent = new Intent(TumtumActivity.this, TumblerActivity.class);
+        Intent intent = new Intent(TumtumActivity.this, TumrcpActivity.class);
         intent.putExtra("image", byteArray);
         startActivity(intent);
 
     }
 
+ */
 
-
-    public void onButton1Clicked(View v){
-        Intent myIntent = new Intent(getApplicationContext(),MainActivity.class);
+    public void onButtonGotum(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), TumrcpActivity.class);
         startActivity(myIntent);
     }
 
-    public void onButton2Clicked(View v){
-        Intent myIntent = new Intent(getApplicationContext(),CertificationActivity.class);
+    public void hmbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(myIntent);
+    }
+
+    public void cmrbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
+        startActivity(myIntent);
+    }
+
+    public void scbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
+        startActivity(myIntent);
+    }
+
+    public void mpbtn(View v) {
+        Intent myIntent = new Intent(getApplicationContext(), MypageActivity.class);
         startActivity(myIntent);
     }
 

@@ -16,26 +16,23 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="265dp">
 
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="97dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="115dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginRight="200dp"
-            android:text="회원가입"
-            android:textColor="#000000"
-            android:textSize="24sp" />
 
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginTop="60dp"
+            app:srcCompat="@drawable/ecomate" />
 
         <EditText
             android:id="@+id/et_name"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="닉네임을 입력하세요"
+            android:textSize="15dp"
             ></EditText>
 
         <LinearLayout
@@ -45,7 +42,8 @@
 
             <EditText
                 android:id="@+id/et_id"
-                android:layout_width="200dp"
+                android:layout_width="150dp"
+                android:textSize="15dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:hint="ID를 입력하세요"></EditText>
@@ -54,6 +52,7 @@
                 android:id="@+id/validateButton"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:textSize="13dp"
                 android:text="중복확인" />
 
         </LinearLayout>
@@ -65,6 +64,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:inputType="textPassword"
+            android:textSize="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호를 입력하세요"
@@ -76,6 +76,7 @@
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="15dp"
             android:hint="비밀번호를 한번 더 입력하세요"
             ></EditText>
 
@@ -85,12 +86,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
+            android:textSize="15dp"
             android:hint="email을 입력하세요"></EditText>
 
 
         <Button
             android:id="@+id/btn_register"
-            android:layout_width="173dp"
+            android:layout_width="140dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_marginStart="16dp"

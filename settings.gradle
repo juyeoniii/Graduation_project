@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':opencv', ':tess-two'
 rootProject.name='Ecomate'
