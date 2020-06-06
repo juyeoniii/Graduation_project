@@ -21,8 +21,8 @@
 21
 22    <uses-sdk
 23        android:minSdkVersion="16"
-23-->C:\Ecomate-2\tess-two\AndroidManifest.xml
+23-->C:\ecomate-4\tess-two\AndroidManifest.xml
 24        android:targetSdkVersion="28" />
-24-->C:\Ecomate-2\tess-two\AndroidManifest.xml
+24-->C:\ecomate-4\tess-two\AndroidManifest.xml
 25
 26</manifest>

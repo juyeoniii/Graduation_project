@@ -12,15 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="25dp"
-        tools:layout_editor_absoluteY="145dp"><![CDATA[
-
-
-
-
-            />
-
-        ]]>
-
+        tools:layout_editor_absoluteY="145dp">
 
 
 

@@ -13,13 +13,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by Belal on 10/24/2017.
  */
 
-public class VolleyMultipartRequest extends Request<NetworkResponse> {
+public abstract class VolleyMultipartRequest extends Request<NetworkResponse> {
 
     private final String twoHyphens = "--";
     private final String lineEnd = "\r\n";
@@ -55,9 +56,20 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
 
         try {
             // populate text payload
-            Map<String, String> params = getParams();
-            if (params != null && params.size() > 0) {
-                textParse(dos, params, getParamsEncoding());
+
+            Map<String, String> pt = getPoint();
+            if (pt != null && pt.size() > 0) {
+                textParse(dos, pt, getParamsEncoding());
+            }
+
+            Map<String, String> user = getID();
+            if (user != null && user.size() > 0) {
+                textParse(dos, user, getParamsEncoding());
+            }
+
+            Map<String, String> name = getName();
+            if (name != null && pt.size() > 0) {
+                textParse(dos, name, getParamsEncoding());
             }
 
             // populate data byte payload
@@ -75,6 +87,12 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
         }
         return null;
     }
+
+    protected abstract Map<String, String> getPoint() throws AuthFailureError;
+
+    protected abstract Map<String, String> getID() throws AuthFailureError;
+
+    protected abstract Map<String, String> getName() throws AuthFailureError;
 
     /**
      * Custom method handle data payload.

@@ -11,7 +11,9 @@
         android:id="@+id/upload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:background="#3A3A37"
+        android:textColor="#FFFFFF"
         android:text="완료"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,13 +23,36 @@
         android:id="@+id/straw_capture"
         android:layout_width="200dp"
         android:layout_height="261dp"
-        android:layout_marginTop="60dp"
-        android:background="#727470"
+        android:layout_marginTop="80dp"
+        android:padding="7dp"
+        android:background="@drawable/ddongle"
         android:scaleType="fitCenter"
-        android:src="@drawable/add"
+        android:src="@drawable/camerapic1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></ImageButton>
+
+    <TextView
+        android:id="@+id/et_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아이디"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upload" />
+
+    <TextView
+        android:id="@+id/et_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="닉네임"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_id" />
+    <TextView
+        android:id="@+id/et_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/et_name"
+        tools:ignore="MissingConstraints" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,69 +66,6 @@
         tools:layout_editor_absoluteX="-54dp">
 
 
-        <LinearLayout
-
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:weightSum="4"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="-54dp">
-
-            <ImageButton
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:onClick="hmbtn"
-                android:padding="14dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/icon2"
-
-
-                />
-
-            <ImageButton
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:onClick="cmrbtn"
-                android:padding="14dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/icon4"
-
-                ></ImageButton>
-
-            <ImageButton
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:padding="14dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/icon3"
-
-                ></ImageButton>
-
-            <ImageButton
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:padding="14dp"
-                android:onClick="mpbtn"
-                android:scaleType="fitXY"
-                android:src="@drawable/icon1"
-
-                ></ImageButton>
-
-
-        </LinearLayout>
 
 
 
@@ -115,7 +77,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
-        android:text="＊종이빨대 인증하기＊"
+        android:text="장바구니 인증"
+        android:textColor="#000000"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

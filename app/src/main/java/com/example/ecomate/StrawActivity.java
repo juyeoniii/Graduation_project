@@ -1,6 +1,7 @@
 package com.example.ecomate;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,9 +14,13 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,7 +29,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class StrawActivity extends AppCompatActivity {
 
@@ -34,8 +53,15 @@ public class StrawActivity extends AppCompatActivity {
     public static final int PICK_IMAGE = 1001;
 
 
+    static final int REQ = 1;
+
     ImageButton Straw_capture;
     Bitmap imageBitmap;
+    Button upload;
+
+    TextView textViewid;
+    TextView point;
+    TextView textViewname;
 
 
     @Override
@@ -44,16 +70,50 @@ public class StrawActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_straw);
 
+        Button upload = (Button)findViewById(R.id.upload);
+
+        Intent intent = getIntent();
+
+        final TextView et_id = (TextView)findViewById(R.id.et_id);
+        String userID = intent.getStringExtra("userID");
+        et_id.setText(userID);
+
+        final TextView et_name = (TextView)findViewById(R.id.et_name);
+        String userName = intent.getStringExtra("userName");
+        et_name.setText(userName);
+
         Straw_capture = (ImageButton)findViewById(R.id.straw_capture);
+        textViewid = (TextView) findViewById(R.id.et_id);
+        point = (TextView) findViewById(R.id.et_point);
+        textViewname = (TextView) findViewById(R.id.et_name);
 
         Straw_capture.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 checkPermission();
                 photoDialogRadio();
+            }
+        });
+
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(getApplicationContext(), "인증 성공! 20P가 적립되었습니다.", Toast.LENGTH_LONG).show();
+                Intent myintent = new Intent(StrawActivity.this,MypageActivity.class);
+
+                String userID = et_id.getText().toString();
+                myintent.putExtra("userID", userID);
+
+                String userName = et_name.getText().toString();
+                myintent.putExtra("userName", userName);
+
+                setResult(RESULT_OK, myintent);
+                finish();
 
             }
         });
+
 
 
     }
@@ -83,28 +143,51 @@ public class StrawActivity extends AppCompatActivity {
         alert.show();
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode ==PICK_IMAGE && resultCode ==RESULT_OK){
+
+            Uri imageUri = data.getData();
             try {
-                InputStream in = getContentResolver().openInputStream(data.getData());
-                imageBitmap = BitmapFactory.decodeStream(in);
-                in.close();
-                imageBitmap = gallerymark(imageBitmap,"songjimin");
+
+                Intent intent = getIntent();
+                String userID = intent.getStringExtra("userID");
+
+                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                imageBitmap = gallerymark(imageBitmap,userID);
+
                 Straw_capture.setImageBitmap(imageBitmap);
 
-            }catch(Exception e){
+                uploadBitmap(imageBitmap);
 
+            }catch(Exception e){
+                e.printStackTrace();
             }
 
         }else if(requestCode == CAPTURE_IMAGE && resultCode == RESULT_OK){
+
+            Intent intent = getIntent();
+            String userID = intent.getStringExtra("userID");
+
             Bundle extras = data.getExtras();
             imageBitmap = (Bitmap) extras.get("data");
+
+
             imageBitmap = rotateImage(imageBitmap, 90);
-            imageBitmap = cameramark(imageBitmap,"songjimin");
+            imageBitmap = cameramark(imageBitmap,userID);
             Straw_capture.setImageBitmap(imageBitmap);
+
+            uploadBitmap(imageBitmap);
+
         }
+    }
+
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
 
     public static Bitmap rotateImage(Bitmap source, float angle) {
@@ -198,25 +281,233 @@ public class StrawActivity extends AppCompatActivity {
         }
     }
 
+    private void uploadBitmap(final Bitmap bitmap) {
+
+        //getting the tag from the edittext
+
+        final String userID = textViewid.getText().toString().trim();
+        final String userPoint = point.getText().toString().trim();
+        final String userName = textViewname.getText().toString().trim();
 
 
-    public void hmbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(myIntent);
+
+
+        //our custom volley request
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, EndPoints.UPLOAD_URL,
+                new Response.Listener<NetworkResponse>() {
+
+                    @Override
+                    public void onResponse(NetworkResponse response) {
+                        try {
+                            JSONObject obj = new JSONObject(new String(response.data));
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+
+            /*
+             * If you want to add more parameters with the image
+             * you can do it here
+             * here we have only one parameter with the image
+             * which is tags
+             * */
+
+            @Override
+            protected Map<String, String> getPoint() throws AuthFailureError {
+                Map<String, String> pt = new HashMap<>();
+                pt.put("userPoint", userPoint);
+                return pt;
+            }
+
+            @Override
+            protected Map<String, String> getID() throws AuthFailureError {
+                Map<String, String> user = new HashMap<>();
+                user.put("userID", userID);
+                return user;
+            }
+
+            @Override
+            protected Map<String, String> getName() throws AuthFailureError {
+                Map<String, String> name = new HashMap<>();
+                name.put("userName", userName);
+                return name;
+            }
+
+            /*
+             * Here we are passing image by renaming it with a unique name
+             * */
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                long imagename = System.currentTimeMillis();
+                params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                return params;
+            }
+
+
+        };
+
+        //adding the request to volley
+        Volley.newRequestQueue(this).add(volleyMultipartRequest);
+
+
+        VolleyMultipartRequest volleyMultiRequest = new VolleyMultipartRequest(Request.Method.POST, EndPoints2.UPLOAD_URL,
+                new Response.Listener<NetworkResponse>() {
+
+                    @Override
+                    public void onResponse(NetworkResponse response) {
+                        try {
+                            JSONObject obj = new JSONObject(new String(response.data));
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+
+            /*
+             * If you want to add more parameters with the image
+             * you can do it here
+             * here we have only one parameter with the image
+             * which is tags
+             * */
+
+            @Override
+            protected Map<String, String> getPoint() throws AuthFailureError {
+                Map<String, String> pt = new HashMap<>();
+                pt.put("userPoint", userPoint);
+                return pt;
+            }
+
+            @Override
+            protected Map<String, String> getID() throws AuthFailureError {
+                Map<String, String> user = new HashMap<>();
+                user.put("userID", userID);
+                return user;
+            }
+
+            @Override
+            protected Map<String, String> getName() throws AuthFailureError {
+                Map<String, String> name = new HashMap<>();
+                name.put("userName", userName);
+                return name;
+            }
+
+            /*
+             * Here we are passing image by renaming it with a unique name
+             * */
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                long imagename = System.currentTimeMillis();
+                params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                return params;
+            }
+            /*
+             * Here we are passing image by renaming it with a unique name
+             * */
+
+
+
+        };
+
+        //adding the request to volley
+        Volley.newRequestQueue(this).add(volleyMultiRequest);
+
+        VolleyMultipartRequest volleyMulti = new VolleyMultipartRequest(Request.Method.POST, EndPoints3.UPLOAD_URL,
+                new Response.Listener<NetworkResponse>() {
+
+                    @Override
+                    public void onResponse(NetworkResponse response) {
+                        try {
+                            JSONObject obj = new JSONObject(new String(response.data));
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+
+            /*
+             * If you want to add more parameters with the image
+             * you can do it here
+             * here we have only one parameter with the image
+             * which is tags
+             * */
+
+            @Override
+            protected Map<String, String> getPoint() throws AuthFailureError {
+                Map<String, String> pt = new HashMap<>();
+                pt.put("userPoint", userPoint);
+                return pt;
+            }
+
+            @Override
+            protected Map<String, String> getID() throws AuthFailureError {
+                Map<String, String> user = new HashMap<>();
+                user.put("userID", userID);
+                return user;
+            }
+
+            @Override
+            protected Map<String, String> getName() throws AuthFailureError {
+                Map<String, String> name = new HashMap<>();
+                name.put("userName", userName);
+                return name;
+            }
+
+            /*
+             * Here we are passing image by renaming it with a unique name
+             * */
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                long imagename = System.currentTimeMillis();
+                params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                return params;
+            }
+            /*
+             * Here we are passing image by renaming it with a unique name
+             * */
+
+
+
+        };
+
+        //adding the request to volley
+        Volley.newRequestQueue(this).add(volleyMulti);
     }
 
-    public void cmrbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
-        startActivity(myIntent);
-    }
 
-    public void scbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
-        startActivity(myIntent);
-    }
 
-    public void mpbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), MypageActivity.class);
-        startActivity(myIntent);
-    }
 }

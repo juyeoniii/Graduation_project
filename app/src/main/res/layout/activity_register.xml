@@ -42,7 +42,7 @@
 
             <EditText
                 android:id="@+id/et_id"
-                android:layout_width="150dp"
+                android:layout_width="160dp"
                 android:textSize="15dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
@@ -51,9 +51,12 @@
             <Button
                 android:id="@+id/validateButton"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:textSize="13dp"
-                android:text="중복확인" />
+                android:layout_height="33dp"
+                android:background="#C0000000"
+                android:text="중복확인"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                android:textSize="13dp" />
 
         </LinearLayout>
 
@@ -87,7 +90,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:textSize="15dp"
-            android:hint="email을 입력하세요"></EditText>
+            android:hint="추천인 아이디"></EditText>
 
 
         <Button

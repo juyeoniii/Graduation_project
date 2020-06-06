@@ -1,12 +1,17 @@
 package com.example.ecomate;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
@@ -23,14 +28,13 @@ public class MainActivity extends AppCompatActivity {
 
     static final int REQ = 1;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Intent intent = getIntent();
-        String userID = intent.getStringExtra("userID");
+        final String userID = intent.getStringExtra("userID");
         String userPassword = intent.getStringExtra("userPassword");
 
         task = new phpdo();
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton cmrbtn = (ImageButton) findViewById(R.id.cmrbtn);
+       ImageButton cmrbtn = (ImageButton) findViewById(R.id.cmrbtn);
         cmrbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +74,15 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("userID", userID);
 
                 startActivityForResult(intent, REQ);
+            }
+        });
+
+        ImageButton scbtn = (ImageButton) findViewById(R.id.scbtn);
+        scbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
             }
         });
 
