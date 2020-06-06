@@ -22,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btn_register,validateButton;
     private AlertDialog dialog;
     private boolean validate=false;
+    String usercode ="";
 
 
 
@@ -35,6 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
         et_name=findViewById(R.id.et_name);
         et_passck=findViewById(R.id.et_passck);
         et_email=findViewById(R.id.et_email);
+
+
+
         validateButton=findViewById(R.id.validateButton);
         validateButton.setOnClickListener(new View.OnClickListener() {//id중복체크
             @Override
@@ -122,7 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 };
                 //서버로 volley를 이용해서 요청을 함
-                RegisterRequest registerRequest=new RegisterRequest(userID, userPass, userName, userEmail, responseListener);
+                RegisterRequest registerRequest=new RegisterRequest(usercode, userID, userPass, userName, userEmail, responseListener);
                 RequestQueue queue= Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);
             }

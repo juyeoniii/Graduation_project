@@ -1,23 +1,15 @@
 package com.example.ecomate;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 public class MypageActivity extends AppCompatActivity{
 
-    TextView et_name;
-    phpdo task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,78 +17,56 @@ public class MypageActivity extends AppCompatActivity{
         setContentView(R.layout.activity_mypage);
 
         Intent intent = getIntent();
+
+        TextView et_id = (TextView)findViewById(R.id.et_id);
         String userID = intent.getStringExtra("userID");
-        String userPassword = intent.getStringExtra("userPassword");
+        et_id.setText(userID);
 
-        task = new phpdo();
-        et_name = (TextView)findViewById(R.id.et_name);
-        task.execute(userID,userPassword);
+        TextView et_name = (TextView)findViewById(R.id.et_name);
+        String userName = intent.getStringExtra("userName");
+        et_name.setText(userName);
 
-    }
 
-    private class phpdo extends AsyncTask<String,Void,String> {
+        ImageButton hmbtn = (ImageButton) findViewById(R.id.hmbtn);
+        hmbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MypageActivity.this, MainActivity.class);
 
-        protected void onPreExecute() {
+                TextView et_id = (TextView)findViewById(R.id.et_id);
+                String userID = et_id.getText().toString();
+                intent.putExtra("userID", userID);
 
-        }
+                TextView et_name = (TextView)findViewById(R.id.et_name);
+                String userName = et_name.getText().toString();
+                intent.putExtra("userName", userName);
 
-        @Override
-        protected String doInBackground(String... arg0) {
-
-            try {
-                String userID = arg0[0];
-                String userPassword = arg0[1];
-
-                String link = "http://192.168.0.2/ehlsl.php?userID=" + userID + "&userPassword=" + userPassword;
-                URL url = new URL(link);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                InputStream inputStream = httpURLConnection.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-                StringBuffer sb = new StringBuffer("");
-                String line = "";
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    sb.append(line);
-                    break;
-                }
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return sb.toString();
-            } catch (Exception e) {
-                return new String("Exception: " + e.getMessage());
+                setResult(RESULT_OK, intent);
+                finish();
             }
+        });
 
-        }
 
-        @Override
-        protected void onPostExecute(String result){
-            //txtview.setText("Login Successful");
-            et_name.setText(result);
-        }
+        ImageButton cmrbtn = (ImageButton) findViewById(R.id.cmrbtn);
+        cmrbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MypageActivity.this, CertificationActivity.class);
+
+                TextView et_id = (TextView)findViewById(R.id.et_id);
+                String userID = et_id.getText().toString();
+                intent.putExtra("userID", userID);
+
+                TextView et_name = (TextView)findViewById(R.id.et_name);
+                String userName = et_name.getText().toString();
+                intent.putExtra("userName", userName);
+
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
     }
 
-
-
-    public void hmbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(myIntent);
-    }
-
-    public void cmrbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
-        startActivity(myIntent);
-    }
-
-    public void scbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
-        startActivity(myIntent);
-    }
-
-    public void mpbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), MypageActivity.class);
-        startActivity(myIntent);
-    }
 }
 

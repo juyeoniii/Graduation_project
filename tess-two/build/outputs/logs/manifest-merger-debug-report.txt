@@ -1,0 +1,37 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Ecomate-2\tess-two\AndroidManifest.xml:17:1-19:12
+INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml:17:1-19:12
+INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml:17:1-19:12
+INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml:17:1-19:12
+INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml:17:1-19:12
+INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml:17:1-19:12
+INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml:17:1-19:12
+	package
+		ADDED from C:\Ecomate-2\tess-two\AndroidManifest.xml:17:11-53
+		INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+		INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+		ADDED from C:\Ecomate-2\tess-two\AndroidManifest.xml:17:1-19:12
+		INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Ecomate-2\tess-two\AndroidManifest.xml:17:1-19:12
+	android:versionCode
+		INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+		ADDED from C:\Ecomate-2\tess-two\AndroidManifest.xml:17:1-19:12
+		INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+uses-sdk
+INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+		ADDED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+		INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+		ADDED from C:\Ecomate-2\tess-two\AndroidManifest.xml
+		INJECTED from C:\Ecomate-2\tess-two\AndroidManifest.xml

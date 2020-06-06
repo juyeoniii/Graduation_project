@@ -109,18 +109,23 @@ public class VegiActivity extends AppCompatActivity {
         //getting the tag from the edittext
         final String tags = editTextTags.getText().toString().trim();
 
+
         //our custom volley request
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, EndPoints.UPLOAD_URL,
                 new Response.Listener<NetworkResponse>() {
+
                     @Override
                     public void onResponse(NetworkResponse response) {
                         try {
                             JSONObject obj = new JSONObject(new String(response.data));
                             Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
                     }
+
                 },
                 new Response.ErrorListener() {
                     @Override
@@ -152,6 +157,8 @@ public class VegiActivity extends AppCompatActivity {
                 params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
                 return params;
             }
+
+
         };
 
         //adding the request to volley
