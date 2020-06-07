@@ -35,20 +35,23 @@
             android:layout_gravity="center"
             android:id="@+id/et_name"
             android:textStyle="bold"
+            android:textColor="#000000"
             android:hint="popo"
             />
 
-            >
+        >
         <TextView
+            android:id="@+id/pointview1"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#454542"
+            android:textColor="#000000"
             android:text = "Point : 0 ">
 
         </TextView>
 
         <ImageView
+            android:id="@+id/pointpic"
             android:layout_width="204dp"
             android:layout_height="170dp"
             android:layout_gravity="center"
@@ -57,29 +60,31 @@
             app:srcCompat="@drawable/sprout_3"></ImageView>
 
         <TextView
+            android:id="@+id/pointview3"
             android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="#000000"
             android:text="1단계 새싹"></TextView>
 
         <TextView
+            android:id="@+id/pointview2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="#000000"
             android:text="다음 단계까지 1000P 남았습니다."
 
             ></TextView>
 
-
-
-
-
-
-
-
-
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_id"
+            android:hint="아이디"
+            android:layout_marginLeft="40dp"
+            />
 
 
         <LinearLayout
@@ -98,11 +103,11 @@
 
 
             <ImageButton
+                android:id="@+id/hmbtn"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:onClick="hmbtn"
                 android:padding="14dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon2"
@@ -111,11 +116,11 @@
                 />
 
             <ImageButton
+                android:id="@+id/cmrbtn"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:onClick="cmrbtn"
                 android:padding="14dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon4"
@@ -128,17 +133,18 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:padding="14dp"
+                android:id="@+id/scbtn"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon3"
 
                 ></ImageButton>
 
             <ImageButton
+                android:id="@+id/mpbtn"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:onClick="mpbtn"
                 android:padding="14dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon1"
@@ -150,5 +156,5 @@
 
 
 
-</LinearLayout>
+    </LinearLayout>
 </LinearLayout>

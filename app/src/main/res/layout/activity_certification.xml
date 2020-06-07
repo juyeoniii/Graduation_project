@@ -13,10 +13,11 @@
         android:layout_height="120dp"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="60dp"
-        android:background="#F5ECC7"
-        android:onClick="onButtonTumbler"
+        android:layout_marginTop="80dp"
+        android:background="#FFFFFF"
+
         android:scaleType="fitXY"
+        android:padding="12dp"
         android:src="@drawable/tumbler"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,26 +27,28 @@
         android:id="@+id/strawbtn"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
-        android:background="#F5ECC7"
-        android:onClick="onButtonStraw"
+        android:background="#FFFFFF"
+
         android:scaleType="fitXY"
-        android:src="@drawable/paperstrow"
+        android:src="@drawable/ecobag"
+        android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tumblerbtn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/mealbtn"
-        android:onClick="onButtonMeal"
+
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="210dp"
-        android:background="#F5ECC7"
+        android:layout_marginTop="240dp"
+        android:background="#FFFFFF"
+        android:padding="15dp"
         android:scaleType="fitXY"
         android:src="@drawable/meal"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,15 +56,16 @@
 
     <ImageButton
         android:id="@+id/walkbtn"
-        android:onClick="onButtonWalk"
+
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="210dp"
+        android:layout_marginTop="240dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
-        android:background="#F5ECC7"
+        android:background="#FFFFFF"
         android:scaleType="fitXY"
         android:src="@drawable/walking"
+        android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/mealbtn"
         app:layout_constraintTop_toTopOf="parent" />
@@ -78,6 +82,7 @@
         android:weightSum="4"
         tools:layout_editor_absoluteX="-40dp"
         tools:layout_editor_absoluteY="229dp">
+
 
 
         <LinearLayout
@@ -97,7 +102,7 @@
                 android:layout_height="64dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:onClick="hmbtn"
+                android:id="@+id/hmbtn"
                 android:padding="14dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon2"
@@ -110,7 +115,7 @@
                 android:layout_height="64dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:onClick="cmrbtn"
+                android:id="@+id/cmrbtn"
                 android:padding="14dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon4"
@@ -123,6 +128,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:padding="14dp"
+                android:id="@+id/scbtn"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon3"
 
@@ -133,7 +139,7 @@
                 android:layout_height="64dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:onClick="mpbtn"
+                android:id="@+id/mpbtn"
                 android:padding="14dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon1"
@@ -154,6 +160,7 @@
         android:layout_marginLeft="320dp"
         android:layout_marginTop="10dp"
         android:text="인증"
+        android:textColor="#000000"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></TextView>
@@ -166,6 +173,7 @@
         android:layout_marginLeft="67dp"
         android:layout_marginTop="185dp"
         android:text="텀블러 인증"
+        android:textColor="#F14CAF50"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -176,7 +184,8 @@
         android:layout_marginTop="185dp"
         android:layout_marginEnd="18dp"
         android:layout_marginRight="18dp"
-        android:text="종이빨대 인증"
+        android:text="장바구니 인증"
+        android:textColor="#F14CAF50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tumbler"
         app:layout_constraintTop_toTopOf="parent" />
@@ -188,8 +197,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="74dp"
         android:layout_marginLeft="74dp"
-        android:layout_marginTop="336dp"
+        android:layout_marginTop="345dp"
         android:text="채식 인증"
+        android:textColor="#F14CAF50"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -198,13 +208,29 @@
         android:id="@+id/walk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="336dp"
+        android:layout_marginTop="345dp"
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
         android:text="걸음 수 인증"
+        android:textColor="#F14CAF50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/meal"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/et_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="아이디"
+        app:layout_constraintBottom_toBottomOf="@+id/meal"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/et_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="닉네임"
+        tools:ignore="MissingConstraints"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

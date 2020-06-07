@@ -13,21 +13,37 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Base64;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class TumtumActivity extends AppCompatActivity {
 
@@ -40,13 +56,33 @@ public class TumtumActivity extends AppCompatActivity {
     ImageButton btn_capture;
     Bitmap imageBitmap;
 
+    TextView textViewid;
+    TextView point;
+    TextView textViewname;
+
+
+    static final int REQ = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tumtum);
 
+        Intent intent = getIntent();
+
+        final TextView et_id = (TextView)findViewById(R.id.et_id);
+        String userID = intent.getStringExtra("userID");
+        et_id.setText(userID);
+
+        final TextView et_name = (TextView)findViewById(R.id.et_name);
+        String userName = intent.getStringExtra("userName");
+        et_name.setText(userName);
+
 
         btn_capture = (ImageButton) findViewById(R.id.btn_capture);
+        textViewid = (TextView) findViewById(R.id.et_id);
+        point = (TextView) findViewById(R.id.et_point);
+        textViewname = (TextView) findViewById(R.id.et_name);
 
         btn_capture.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -54,6 +90,24 @@ public class TumtumActivity extends AppCompatActivity {
                 checkPermission();
                 photoDialogRadio();
 
+            }
+        });
+
+        Button gotumrcp = (Button)findViewById(R.id.gotumrcp);
+        gotumrcp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TumtumActivity.this, TumrcpActivity.class);
+
+                TextView et_name = (TextView)findViewById(R.id.et_name);
+                TextView et_id = (TextView)findViewById(R.id.et_id);
+                String userName = et_name.getText().toString();
+                intent.putExtra("userName", userName);
+
+                String userID = et_id.getText().toString();
+                intent.putExtra("userID", userID);
+
+                startActivityForResult(intent, REQ);
             }
         });
 
@@ -88,24 +142,49 @@ public class TumtumActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode ==PICK_IMAGE && resultCode ==RESULT_OK){
-            try {
-                InputStream in = getContentResolver().openInputStream(data.getData());
-                imageBitmap = BitmapFactory.decodeStream(in);
-                in.close();
-                imageBitmap = gallerymark(imageBitmap,"songjimin");
-                btn_capture.setImageBitmap(imageBitmap);
-            }catch(Exception e){
 
+            Uri imageUri = data.getData();
+            try {
+
+                Intent intent = getIntent();
+                String userID = intent.getStringExtra("userID");
+
+                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                imageBitmap = gallerymark(imageBitmap,userID);
+
+                btn_capture.setImageBitmap(imageBitmap);
+
+                uploadBitmap(imageBitmap);
+
+            }catch(Exception e){
+                e.printStackTrace();
             }
 
         }else if(requestCode == CAPTURE_IMAGE && resultCode == RESULT_OK){
+
+            Intent intent = getIntent();
+            String userID = intent.getStringExtra("userID");
+
             Bundle extras = data.getExtras();
             imageBitmap = (Bitmap) extras.get("data");
+
+
             imageBitmap = rotateImage(imageBitmap, 90);
-            imageBitmap = cameramark(imageBitmap,"songjimin");
+            imageBitmap = cameramark(imageBitmap,userID);
             btn_capture.setImageBitmap(imageBitmap);
+
+            uploadBitmap(imageBitmap);
+
         }
     }
+
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
+
+
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
@@ -274,6 +353,233 @@ public class TumtumActivity extends AppCompatActivity {
     public void mpbtn(View v) {
         Intent myIntent = new Intent(getApplicationContext(), MypageActivity.class);
         startActivity(myIntent);
+    }
+
+    private void uploadBitmap(final Bitmap bitmap) {
+
+        //getting the tag from the edittext
+
+        final String userID = textViewid.getText().toString().trim();
+        final String userPoint = point.getText().toString().trim();
+        final String userName = textViewname.getText().toString().trim();
+
+
+
+
+        //our custom volley request
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, EndPoints.UPLOAD_URL,
+                new Response.Listener<NetworkResponse>() {
+
+                    @Override
+                    public void onResponse(NetworkResponse response) {
+                        try {
+                            JSONObject obj = new JSONObject(new String(response.data));
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+
+            /*
+             * If you want to add more parameters with the image
+             * you can do it here
+             * here we have only one parameter with the image
+             * which is tags
+             * */
+
+            @Override
+            protected Map<String, String> getPoint() throws AuthFailureError {
+                Map<String, String> pt = new HashMap<>();
+                pt.put("userPoint", userPoint);
+                return pt;
+            }
+
+            @Override
+            protected Map<String, String> getID() throws AuthFailureError {
+                Map<String, String> user = new HashMap<>();
+                user.put("userID", userID);
+                return user;
+            }
+
+            @Override
+            protected Map<String, String> getName() throws AuthFailureError {
+                Map<String, String> name = new HashMap<>();
+                name.put("userName", userName);
+                return name;
+            }
+
+            /*
+             * Here we are passing image by renaming it with a unique name
+             * */
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                long imagename = System.currentTimeMillis();
+                params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                return params;
+            }
+
+
+        };
+
+        //adding the request to volley
+        Volley.newRequestQueue(this).add(volleyMultipartRequest);
+
+
+        VolleyMultipartRequest volleyMultiRequest = new VolleyMultipartRequest(Request.Method.POST, EndPoints2.UPLOAD_URL,
+                new Response.Listener<NetworkResponse>() {
+
+                    @Override
+                    public void onResponse(NetworkResponse response) {
+                        try {
+                            JSONObject obj = new JSONObject(new String(response.data));
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+
+            /*
+             * If you want to add more parameters with the image
+             * you can do it here
+             * here we have only one parameter with the image
+             * which is tags
+             * */
+
+            @Override
+            protected Map<String, String> getPoint() throws AuthFailureError {
+                Map<String, String> pt = new HashMap<>();
+                pt.put("userPoint", userPoint);
+                return pt;
+            }
+
+            @Override
+            protected Map<String, String> getID() throws AuthFailureError {
+                Map<String, String> user = new HashMap<>();
+                user.put("userID", userID);
+                return user;
+            }
+
+            @Override
+            protected Map<String, String> getName() throws AuthFailureError {
+                Map<String, String> name = new HashMap<>();
+                name.put("userName", userName);
+                return name;
+            }
+
+            /*
+             * Here we are passing image by renaming it with a unique name
+             * */
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                long imagename = System.currentTimeMillis();
+                params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                return params;
+            }
+            /*
+             * Here we are passing image by renaming it with a unique name
+             * */
+
+
+
+        };
+
+        //adding the request to volley
+        Volley.newRequestQueue(this).add(volleyMultiRequest);
+
+        VolleyMultipartRequest volleyMulti = new VolleyMultipartRequest(Request.Method.POST, EndPoints3.UPLOAD_URL,
+                new Response.Listener<NetworkResponse>() {
+
+                    @Override
+                    public void onResponse(NetworkResponse response) {
+                        try {
+                            JSONObject obj = new JSONObject(new String(response.data));
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+
+            /*
+             * If you want to add more parameters with the image
+             * you can do it here
+             * here we have only one parameter with the image
+             * which is tags
+             * */
+
+            @Override
+            protected Map<String, String> getPoint() throws AuthFailureError {
+                Map<String, String> pt = new HashMap<>();
+                pt.put("userPoint", userPoint);
+                return pt;
+            }
+
+            @Override
+            protected Map<String, String> getID() throws AuthFailureError {
+                Map<String, String> user = new HashMap<>();
+                user.put("userID", userID);
+                return user;
+            }
+
+            @Override
+            protected Map<String, String> getName() throws AuthFailureError {
+                Map<String, String> name = new HashMap<>();
+                name.put("userName", userName);
+                return name;
+            }
+
+            /*
+             * Here we are passing image by renaming it with a unique name
+             * */
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                long imagename = System.currentTimeMillis();
+                params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                return params;
+            }
+            /*
+             * Here we are passing image by renaming it with a unique name
+             * */
+
+
+
+        };
+
+        //adding the request to volley
+        Volley.newRequestQueue(this).add(volleyMulti);
     }
 
 }

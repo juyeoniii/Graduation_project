@@ -65,12 +65,24 @@ public class TumrcpActivity extends AppCompatActivity {
     TextView OCRTextView;
     String newString;
 
+    static final int REQ = 1;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tumrcp);
+
+        Intent intent = getIntent();
+
+        final TextView et_id = (TextView)findViewById(R.id.et_id);
+        String userID = intent.getStringExtra("userID");
+        et_id.setText("아이디 : " +userID);
+
+        final TextView et_name = (TextView)findViewById(R.id.et_name);
+        String userName = intent.getStringExtra("userName");
+        et_name.setText("닉네임 : " +userName);
 
 
         btn_capture = (ImageButton) findViewById(R.id.recieptview);
@@ -286,7 +298,24 @@ public class TumrcpActivity extends AppCompatActivity {
             btn_capture.setImageBitmap(imageBitmap);
 
         }
+        else if (requestCode == REQ){
+
+
+            TextView et_name = (TextView)findViewById(R.id.et_name);
+            String userName = et_name.getText().toString();
+            data.getStringExtra("userName");
+            et_name.setText(userName);
+
+            TextView et_id = (TextView)findViewById(R.id.et_id);
+            String userID = et_id.getText().toString();
+            data.getStringExtra("userID");
+            et_id.setText(userID);
+
+
+        }
     }
+
+
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);

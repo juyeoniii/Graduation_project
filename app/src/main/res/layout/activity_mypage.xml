@@ -22,7 +22,8 @@
             android:layout_marginLeft="120dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="100dp"
-            android:text="My page"
+            android:text="MY PAGE"
+            android:layout_gravity="center"
             android:textSize="16sp"
             tools:layout_editor_absoluteX="156dp"
             tools:layout_editor_absoluteY="53dp" />
@@ -55,10 +56,19 @@
                 <TextView
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
+                    android:id="@+id/et_id"
+                    android:hint="아이디"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="30dp"
+                    />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/et_name"
                     android:hint="닉네임"
                     android:layout_marginLeft="40dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -68,15 +78,6 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="40dp"/>
 
-                <TextView
-                    android:id="@+id/textView13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="30dp"
-                    android:text="추천인코드"
-                    android:textColor="#040404" />
 
             </LinearLayout>
 
@@ -117,7 +118,7 @@
                 android:layout_height="64dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:onClick="hmbtn"
+                android:id="@+id/hmbtn"
                 android:padding="14dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon2"
@@ -130,7 +131,7 @@
                 android:layout_height="64dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:onClick="cmrbtn"
+                android:id="@+id/cmrbtn"
                 android:padding="14dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon4"
@@ -144,6 +145,7 @@
                 android:background="@android:color/transparent"
                 android:padding="14dp"
                 android:scaleType="fitXY"
+                android:id="@+id/scbtn"
                 android:src="@drawable/icon3"
 
                 ></ImageButton>
@@ -154,7 +156,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:padding="14dp"
-                android:onClick="mpbtn"
+                android:id="@+id/mpbtn"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon1"
 
