@@ -5,7 +5,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -36,6 +40,7 @@ public class SearchActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ProductsAdapter adapter;
     GridLayoutManager layoutManager;
+    TextView et_id, et_name;
 
 
     @Override
@@ -45,6 +50,17 @@ public class SearchActivity extends AppCompatActivity {
 
         //getting the recyclerview from xml
         recyclerView = findViewById(R.id.recylcerView2);
+
+        Intent intent = getIntent();
+
+        final TextView et_id = (TextView)findViewById(R.id.et_id);
+        String userID = intent.getStringExtra("userID");
+        et_id.setText("아이디 : " +userID);
+
+        final TextView et_name = (TextView)findViewById(R.id.et_name);
+        String userName = intent.getStringExtra("userName");
+        et_name.setText("닉네임 : " +userName);
+
 
         //initializing the productlist
         productList = new ArrayList<>();
@@ -57,6 +73,64 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+        ImageButton cmrbtn = (ImageButton) findViewById(R.id.cmrbtn);
+        cmrbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SearchActivity.this, CertificationActivity.class);
+
+
+                String userID = et_id.getText().toString();
+                intent.putExtra("userID", userID);
+
+
+                String userName = et_name.getText().toString();
+                intent.putExtra("userName", userName);
+
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
+        ImageButton mpbtn = (ImageButton) findViewById(R.id.mpbtn);
+        mpbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SearchActivity.this, MypageActivity.class);
+
+
+                String userID = et_id.getText().toString();
+                intent.putExtra("userID", userID);
+
+
+                String userName = et_name.getText().toString();
+                intent.putExtra("userName", userName);
+
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
+        ImageButton hmbtn = (ImageButton) findViewById(R.id.hmbtn);
+        hmbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+
+
+                String userID = et_id.getText().toString();
+                intent.putExtra("userID", userID);
+
+
+                String userName = et_name.getText().toString();
+                intent.putExtra("userName", userName);
+
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
+
+
 
 
         //this method will fetch and parse json
@@ -66,13 +140,6 @@ public class SearchActivity extends AppCompatActivity {
 
     private void loadProducts() {
 
-        /*
-         * Creating a String Request
-         * The request type is GET defined by first parameter
-         * The URL is defined in the second parameter
-         * Then we have a Response Listener and a Error Listener
-         * In response listener we will get the JSON response as a String
-         * */
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_PRODUCTS,
                 new Response.Listener<String>() {
                     @Override

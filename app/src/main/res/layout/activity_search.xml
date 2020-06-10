@@ -1,18 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SearchActivity">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recylcerView2"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="640dp"
-        android:layout_marginTop="50dp"
-        tools:layout_editor_absoluteX="745dp"
-        tools:layout_editor_absoluteY="-51dp" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        >
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_id"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:tag="ScrollTopTag"
+                android:textColor="#ffffff"
+                android:hint="idididid"/>
+
+            <TextView
+                android:id="@+id/et_name"
+                android:textColor="#ffffff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+
+                android:hint="nickname" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recylcerView2"
+                android:layout_width="match_parent"
+                android:layout_height="640dp"
+                android:layout_weight="1"
+
+                tools:layout_editor_absoluteX="745dp"
+                tools:layout_editor_absoluteY="-51dp" />
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:weightSum="4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-54dp">
+
+
+        <LinearLayout
+
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:weightSum="4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="-54dp">
+
+            <ImageButton
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:id="@+id/hmbtn"
+                android:padding="14dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon2"
+
+
+                />
+
+            <ImageButton
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:id="@+id/cmrbtn"
+                android:padding="14dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon4"
+
+                ></ImageButton>
+
+            <ImageButton
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:padding="14dp"
+                android:scaleType="fitXY"
+                android:id="@+id/scbtn"
+                android:src="@drawable/icon3"
+
+                ></ImageButton>
+
+            <ImageButton
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:padding="14dp"
+                android:id="@+id/mpbtn"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon1"
+
+                ></ImageButton>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

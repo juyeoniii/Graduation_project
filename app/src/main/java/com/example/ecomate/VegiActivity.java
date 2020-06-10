@@ -53,11 +53,9 @@ public class VegiActivity extends AppCompatActivity {
     public static final int PICK_IMAGE = 1001;
 
 
-    static final int REQ = 1;
-
     ImageView vegiView;
     Bitmap imageBitmap;
-    Button upload;
+
 
     TextView textViewid;
     TextView point;
@@ -70,7 +68,7 @@ public class VegiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vegi);
 
-        Button upload = (Button)findViewById(R.id.upload);
+        Button upload = (Button)findViewById(R.id.buttonUploadImage);
 
         Intent intent = getIntent();
 
@@ -204,7 +202,7 @@ public class VegiActivity extends AppCompatActivity {
         Canvas canvas = new Canvas(result);
         canvas.drawBitmap(src, 0, 0, null);
         Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.BLACK);
         paint.setTextSize(60);
         paint.setAntiAlias(true);
         paint.setUnderlineText(false);
@@ -220,7 +218,7 @@ public class VegiActivity extends AppCompatActivity {
         Canvas canvas = new Canvas(result);
         canvas.drawBitmap(src, 0, 0, null);
         Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.BLACK);
         paint.setTextSize(13);
         paint.setAntiAlias(true);
         paint.setUnderlineText(false);
@@ -290,10 +288,8 @@ public class VegiActivity extends AppCompatActivity {
         final String userName = textViewname.getText().toString().trim();
 
 
-
-
         //our custom volley request
-        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, EndPoints.UPLOAD_URL,
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, EndPoints.ROOT_URL,
                 new Response.Listener<NetworkResponse>() {
 
                     @Override
@@ -336,13 +332,6 @@ public class VegiActivity extends AppCompatActivity {
                 Map<String, String> user = new HashMap<>();
                 user.put("userID", userID);
                 return user;
-            }
-
-            @Override
-            protected Map<String, String> getName() throws AuthFailureError {
-                Map<String, String> name = new HashMap<>();
-                name.put("userName", userName);
-                return name;
             }
 
             /*
@@ -361,151 +350,6 @@ public class VegiActivity extends AppCompatActivity {
 
         //adding the request to volley
         Volley.newRequestQueue(this).add(volleyMultipartRequest);
-
-
-        VolleyMultipartRequest volleyMultiRequest = new VolleyMultipartRequest(Request.Method.POST, EndPoints2.UPLOAD_URL,
-                new Response.Listener<NetworkResponse>() {
-
-                    @Override
-                    public void onResponse(NetworkResponse response) {
-                        try {
-                            JSONObject obj = new JSONObject(new String(response.data));
-                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-
-            /*
-             * If you want to add more parameters with the image
-             * you can do it here
-             * here we have only one parameter with the image
-             * which is tags
-             * */
-
-            @Override
-            protected Map<String, String> getPoint() throws AuthFailureError {
-                Map<String, String> pt = new HashMap<>();
-                pt.put("userPoint", userPoint);
-                return pt;
-            }
-
-            @Override
-            protected Map<String, String> getID() throws AuthFailureError {
-                Map<String, String> user = new HashMap<>();
-                user.put("userID", userID);
-                return user;
-            }
-
-            @Override
-            protected Map<String, String> getName() throws AuthFailureError {
-                Map<String, String> name = new HashMap<>();
-                name.put("userName", userName);
-                return name;
-            }
-
-            /*
-             * Here we are passing image by renaming it with a unique name
-             * */
-            @Override
-            protected Map<String, DataPart> getByteData() {
-                Map<String, DataPart> params = new HashMap<>();
-                long imagename = System.currentTimeMillis();
-                params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
-                return params;
-            }
-            /*
-             * Here we are passing image by renaming it with a unique name
-             * */
-
-
-
-        };
-
-        //adding the request to volley
-        Volley.newRequestQueue(this).add(volleyMultiRequest);
-
-        VolleyMultipartRequest volleyMulti = new VolleyMultipartRequest(Request.Method.POST, EndPoints3.UPLOAD_URL,
-                new Response.Listener<NetworkResponse>() {
-
-                    @Override
-                    public void onResponse(NetworkResponse response) {
-                        try {
-                            JSONObject obj = new JSONObject(new String(response.data));
-                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-
-            /*
-             * If you want to add more parameters with the image
-             * you can do it here
-             * here we have only one parameter with the image
-             * which is tags
-             * */
-
-            @Override
-            protected Map<String, String> getPoint() throws AuthFailureError {
-                Map<String, String> pt = new HashMap<>();
-                pt.put("userPoint", userPoint);
-                return pt;
-            }
-
-            @Override
-            protected Map<String, String> getID() throws AuthFailureError {
-                Map<String, String> user = new HashMap<>();
-                user.put("userID", userID);
-                return user;
-            }
-
-            @Override
-            protected Map<String, String> getName() throws AuthFailureError {
-                Map<String, String> name = new HashMap<>();
-                name.put("userName", userName);
-                return name;
-            }
-
-            /*
-             * Here we are passing image by renaming it with a unique name
-             * */
-            @Override
-            protected Map<String, DataPart> getByteData() {
-                Map<String, DataPart> params = new HashMap<>();
-                long imagename = System.currentTimeMillis();
-                params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
-                return params;
-            }
-            /*
-             * Here we are passing image by renaming it with a unique name
-             * */
-
-
-
-        };
-
-        //adding the request to volley
-        Volley.newRequestQueue(this).add(volleyMulti);
     }
 
 

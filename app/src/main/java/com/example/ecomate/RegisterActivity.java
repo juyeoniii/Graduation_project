@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -18,12 +19,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText et_id, et_pass, et_name,et_passck,et_email;
+    private EditText et_id, et_pass, et_name,et_passck,et_recoid;
     private Button btn_register,validateButton;
     private AlertDialog dialog;
     private boolean validate=false;
     String usercode ="";
-
+    TextView point;
 
 
     @Override
@@ -35,7 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
         et_pass=findViewById(R.id.et_pass);
         et_name=findViewById(R.id.et_name);
         et_passck=findViewById(R.id.et_passck);
-        et_email=findViewById(R.id.et_email);
+        et_recoid=findViewById(R.id.et_recoid);
+
+        point = (TextView) findViewById(R.id.et_point);
 
 
 
@@ -101,7 +104,8 @@ public class RegisterActivity extends AppCompatActivity {
                 final String userPass=et_pass.getText().toString();
                 String userName=et_name.getText().toString();
                 final String PassCk=et_passck.getText().toString();
-                String userEmail=et_email.getText().toString();
+                String recommendID=et_recoid.getText().toString();
+                String userPoint = point.getText().toString();
 
                 Response.Listener<String> responseListener=new Response.Listener<String>() {//volley
                     @Override
@@ -111,13 +115,13 @@ public class RegisterActivity extends AppCompatActivity {
                             boolean success=jasonObject.getBoolean("success");//Register2 php에 sucess
                             if(userPass.equals(PassCk)) {
                                 if (success) {//회원등록 성공한 경우
-                                    Toast.makeText(getApplicationContext(), "회원 등록 성공", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "회원가입 완료되었습니다.", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                     startActivity(intent);
                                 }
                             }
                             else{//회원등록 실패한 경우
-                                Toast.makeText(getApplicationContext(),"회원 등록 실패",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show();
                                 return;
                             }
                         } catch (JSONException e) {
@@ -126,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 };
                 //서버로 volley를 이용해서 요청을 함
-                RegisterRequest registerRequest=new RegisterRequest(usercode, userID, userPass, userName, userEmail, responseListener);
+                RegisterRequest registerRequest=new RegisterRequest(usercode, userID, userPass, userName, recommendID,userPoint, responseListener);
                 RequestQueue queue= Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);
             }

@@ -84,13 +84,24 @@
             ></EditText>
 
         <EditText
-            android:id="@+id/et_email"
+            android:id="@+id/et_recoid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:textSize="15dp"
             android:hint="추천인 아이디"></EditText>
+
+        <TextView
+            android:id="@+id/et_point"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:textSize="15dp"
+            android:textColor="#FFFFFF"
+            android:text="0"></TextView>
+
 
 
         <Button

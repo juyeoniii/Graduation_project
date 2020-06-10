@@ -1,6 +1,7 @@
 package com.example.ecomate;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -61,8 +62,6 @@ public class TumtumActivity extends AppCompatActivity {
     TextView textViewname;
 
 
-    static final int REQ = 1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +96,7 @@ public class TumtumActivity extends AppCompatActivity {
         gotumrcp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TumtumActivity.this, TumrcpActivity.class);
+                Intent intent = new Intent(TumtumActivity.this, CertificationActivity.class);
 
                 TextView et_name = (TextView)findViewById(R.id.et_name);
                 TextView et_id = (TextView)findViewById(R.id.et_id);
@@ -107,7 +106,9 @@ public class TumtumActivity extends AppCompatActivity {
                 String userID = et_id.getText().toString();
                 intent.putExtra("userID", userID);
 
-                startActivityForResult(intent, REQ);
+                Toast.makeText(getApplicationContext(), "인증 성공! 50P가 적립되었습니다.", Toast.LENGTH_LONG).show();
+
+                startActivity(intent);
             }
         });
 
@@ -199,7 +200,7 @@ public class TumtumActivity extends AppCompatActivity {
         Canvas canvas = new Canvas(result);
         canvas.drawBitmap(src, 0, 0, null);
         Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.BLACK);
         paint.setTextSize(60);
         paint.setAntiAlias(true);
         paint.setUnderlineText(false);
@@ -215,7 +216,7 @@ public class TumtumActivity extends AppCompatActivity {
         Canvas canvas = new Canvas(result);
         canvas.drawBitmap(src, 0, 0, null);
         Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.BLACK);
         paint.setTextSize(13);
         paint.setAntiAlias(true);
         paint.setUnderlineText(false);
@@ -285,75 +286,14 @@ public class TumtumActivity extends AppCompatActivity {
         }
     }
 
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    } // BiteMapToString
 
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        }catch(Exception e){
-            e.getMessage();
-            return null;
-        }
-    } // StringToBitMap
-
-
-
-
-/*
-    public void onButtonGotum(View v){
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 4;
-        Bitmap bitmap = ((BitmapDrawable)iv_view.getDrawable()).getBitmap();
-
-        float scale = (float) (2048/(float)bitmap.getWidth());
-        int image_w = (int) (bitmap.getWidth() * scale);
-        int image_h = (int) (bitmap.getHeight() * scale);
-        Bitmap resize = Bitmap.createScaledBitmap(bitmap, image_w, image_h, true);
-        resize.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-
-
-        Intent intent = new Intent(TumtumActivity.this, TumrcpActivity.class);
-        intent.putExtra("image", byteArray);
-        startActivity(intent);
-
-    }
-
- */
-
-    public void onButtonGotum(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), TumrcpActivity.class);
-        startActivity(myIntent);
-    }
 
     public void hmbtn(View v) {
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(myIntent);
     }
 
-    public void cmrbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
-        startActivity(myIntent);
-    }
 
-    public void scbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
-        startActivity(myIntent);
-    }
-
-    public void mpbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), MypageActivity.class);
-        startActivity(myIntent);
-    }
 
     private void uploadBitmap(final Bitmap bitmap) {
 
@@ -361,13 +301,9 @@ public class TumtumActivity extends AppCompatActivity {
 
         final String userID = textViewid.getText().toString().trim();
         final String userPoint = point.getText().toString().trim();
-        final String userName = textViewname.getText().toString().trim();
-
-
-
 
         //our custom volley request
-        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, EndPoints.UPLOAD_URL,
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, EndPoints.ROOT_URL,
                 new Response.Listener<NetworkResponse>() {
 
                     @Override
@@ -412,12 +348,6 @@ public class TumtumActivity extends AppCompatActivity {
                 return user;
             }
 
-            @Override
-            protected Map<String, String> getName() throws AuthFailureError {
-                Map<String, String> name = new HashMap<>();
-                name.put("userName", userName);
-                return name;
-            }
 
             /*
              * Here we are passing image by renaming it with a unique name
@@ -435,151 +365,5 @@ public class TumtumActivity extends AppCompatActivity {
 
         //adding the request to volley
         Volley.newRequestQueue(this).add(volleyMultipartRequest);
-
-
-        VolleyMultipartRequest volleyMultiRequest = new VolleyMultipartRequest(Request.Method.POST, EndPoints2.UPLOAD_URL,
-                new Response.Listener<NetworkResponse>() {
-
-                    @Override
-                    public void onResponse(NetworkResponse response) {
-                        try {
-                            JSONObject obj = new JSONObject(new String(response.data));
-                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-
-            /*
-             * If you want to add more parameters with the image
-             * you can do it here
-             * here we have only one parameter with the image
-             * which is tags
-             * */
-
-            @Override
-            protected Map<String, String> getPoint() throws AuthFailureError {
-                Map<String, String> pt = new HashMap<>();
-                pt.put("userPoint", userPoint);
-                return pt;
-            }
-
-            @Override
-            protected Map<String, String> getID() throws AuthFailureError {
-                Map<String, String> user = new HashMap<>();
-                user.put("userID", userID);
-                return user;
-            }
-
-            @Override
-            protected Map<String, String> getName() throws AuthFailureError {
-                Map<String, String> name = new HashMap<>();
-                name.put("userName", userName);
-                return name;
-            }
-
-            /*
-             * Here we are passing image by renaming it with a unique name
-             * */
-            @Override
-            protected Map<String, DataPart> getByteData() {
-                Map<String, DataPart> params = new HashMap<>();
-                long imagename = System.currentTimeMillis();
-                params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
-                return params;
-            }
-            /*
-             * Here we are passing image by renaming it with a unique name
-             * */
-
-
-
-        };
-
-        //adding the request to volley
-        Volley.newRequestQueue(this).add(volleyMultiRequest);
-
-        VolleyMultipartRequest volleyMulti = new VolleyMultipartRequest(Request.Method.POST, EndPoints3.UPLOAD_URL,
-                new Response.Listener<NetworkResponse>() {
-
-                    @Override
-                    public void onResponse(NetworkResponse response) {
-                        try {
-                            JSONObject obj = new JSONObject(new String(response.data));
-                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-
-            /*
-             * If you want to add more parameters with the image
-             * you can do it here
-             * here we have only one parameter with the image
-             * which is tags
-             * */
-
-            @Override
-            protected Map<String, String> getPoint() throws AuthFailureError {
-                Map<String, String> pt = new HashMap<>();
-                pt.put("userPoint", userPoint);
-                return pt;
-            }
-
-            @Override
-            protected Map<String, String> getID() throws AuthFailureError {
-                Map<String, String> user = new HashMap<>();
-                user.put("userID", userID);
-                return user;
-            }
-
-            @Override
-            protected Map<String, String> getName() throws AuthFailureError {
-                Map<String, String> name = new HashMap<>();
-                name.put("userName", userName);
-                return name;
-            }
-
-            /*
-             * Here we are passing image by renaming it with a unique name
-             * */
-            @Override
-            protected Map<String, DataPart> getByteData() {
-                Map<String, DataPart> params = new HashMap<>();
-                long imagename = System.currentTimeMillis();
-                params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
-                return params;
-            }
-            /*
-             * Here we are passing image by renaming it with a unique name
-             * */
-
-
-
-        };
-
-        //adding the request to volley
-        Volley.newRequestQueue(this).add(volleyMulti);
     }
-
 }

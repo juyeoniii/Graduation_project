@@ -78,11 +78,11 @@ public class TumrcpActivity extends AppCompatActivity {
 
         final TextView et_id = (TextView)findViewById(R.id.et_id);
         String userID = intent.getStringExtra("userID");
-        et_id.setText("아이디 : " +userID);
+        et_id.setText(userID);
 
         final TextView et_name = (TextView)findViewById(R.id.et_name);
         String userName = intent.getStringExtra("userName");
-        et_name.setText("닉네임 : " +userName);
+        et_name.setText(userName);
 
 
         btn_capture = (ImageButton) findViewById(R.id.recieptview);
@@ -122,6 +122,7 @@ public class TumrcpActivity extends AppCompatActivity {
                 image = ((BitmapDrawable)btn_capture.getDrawable()).getBitmap();
                 processImage(image);
 
+
             }
         });
 
@@ -139,13 +140,27 @@ public class TumrcpActivity extends AppCompatActivity {
         // newString 이 인식 날짜
 
 
+
         //@@@ 애뮬레이터 시간 변경해줘야 날짜 맞는지 확인 가능 @@@
         combtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
-                if((newString == sdf0.format(today))||(newString == sdf1.format(today))||(newString == sdf2.format(today))||(newString == sdf3.format(today))){
+
+                if((newString.equals(sdf0.format(today)))||(newString.equals(sdf1.format(today)))||(newString.equals(sdf2.format(today)))||(newString.equals(sdf3.format(today)))){
                     Toast.makeText(getApplicationContext(), "인증 성공!", Toast.LENGTH_LONG).show();
+
+                    Intent intent22 = new Intent(TumrcpActivity.this,TumtumActivity.class);
+
+                    TextView et_name = (TextView)findViewById(R.id.et_name);
+                    TextView et_id = (TextView)findViewById(R.id.et_id);
+                    String userName = et_name.getText().toString();
+                    intent22.putExtra("userName", userName);
+
+                    String userID = et_id.getText().toString();
+                    intent22.putExtra("userID", userID);
+                    startActivity(intent22);
+
 
                 } else Toast.makeText(getApplicationContext(), "인증 실패!", Toast.LENGTH_LONG).show();
 
@@ -153,9 +168,7 @@ public class TumrcpActivity extends AppCompatActivity {
         });
 
 /*
-
 /*
-
 */
 
     }
@@ -177,21 +190,15 @@ public class TumrcpActivity extends AppCompatActivity {
 
         if (matcher.find()){
 
+
             newString = matcher.group();
             sb.setSpan(new ForegroundColorSpan(Color.rgb(255, 0, 0)), matcher.start(), matcher.end(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            //OCRTextView.setText(sb);
             OCRTextView.setText(sb);
+
 
         } else OCRTextView.setText("날짜를 인식하지 못하였습니다.");
 
-
-
-        /*
-        if(OCRresult.contains("할인")){
-            ssb.setSpan(new ForegroundColorSpan(Color.parseColor("#5F00FF")),OCRresult.indexOf("할인"),OCRresult.indexOf("할인")+2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            OCRTextView.setText(ssb);
-        }else OCRTextView.setText(OCRresult);
-
-        */
 
     }
 
@@ -323,45 +330,6 @@ public class TumrcpActivity extends AppCompatActivity {
                 matrix, true);
     }
 
-    public static Bitmap gallerymark(Bitmap src, String watermark) {
-        int w = src.getWidth();
-        int h = src.getHeight();
-        Bitmap result = Bitmap.createBitmap(w, h, src.getConfig());
-        Canvas canvas = new Canvas(result);
-        canvas.drawBitmap(src, 0, 0, null);
-        Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
-        paint.setTextSize(60);
-        paint.setAntiAlias(true);
-        paint.setUnderlineText(false);
-        canvas.drawText(watermark, 100 ,350 , paint);
-
-
-        return result;
-    }
-    public static Bitmap cameramark(Bitmap src, String watermark) {
-        int w = src.getWidth();
-        int h = src.getHeight();
-        Bitmap result = Bitmap.createBitmap(w, h, src.getConfig());
-        Canvas canvas = new Canvas(result);
-        canvas.drawBitmap(src, 0, 0, null);
-        Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
-        paint.setTextSize(13);
-        paint.setAntiAlias(true);
-        paint.setUnderlineText(false);
-        canvas.drawText(watermark, 33 ,78 , paint);
-
-
-        return result;
-    }
-
-
-
-
-
-
-
 
 
 
@@ -416,70 +384,7 @@ public class TumrcpActivity extends AppCompatActivity {
         }
     }
 
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    } // BiteMapToString
-
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        }catch(Exception e){
-            e.getMessage();
-            return null;
-        }
-    } // StringToBitMap
 
 
-
-
-/*
-    public void onButtontumbler(View v){
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 4;
-        Bitmap bitmap = ((BitmapDrawable)btn_capture.getDrawable()).getBitmap();
-
-        float scale = (float) (2048/(float)bitmap.getWidth());
-        int image_w = (int) (bitmap.getWidth() * scale);
-        int image_h = (int) (bitmap.getHeight() * scale);
-        Bitmap resize = Bitmap.createScaledBitmap(bitmap, image_w, image_h, true);
-        resize.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-
-
-        Intent intent = new Intent(TumrcpActivity.this, TumblerActivity.class);
-        intent.putExtra("image", byteArray);
-        startActivity(intent);
-
-    }
-
- */
-
-
-    public void hmbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(myIntent);
-    }
-
-    public void cmrbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
-        startActivity(myIntent);
-    }
-
-    public void scbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), CertificationActivity.class);
-        startActivity(myIntent);
-    }
-
-    public void mpbtn(View v) {
-        Intent myIntent = new Intent(getApplicationContext(), MypageActivity.class);
-        startActivity(myIntent);
-    }
 
 }

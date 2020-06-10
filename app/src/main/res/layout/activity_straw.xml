@@ -8,7 +8,7 @@
     tools:context=".StrawActivity">
 
     <Button
-        android:id="@+id/upload"
+        android:id="@+id/buttonUploadImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -17,10 +17,10 @@
         android:text="완료"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/straw_capture" />
+        app:layout_constraintTop_toBottomOf="@+id/vegiview" />
 
-    <ImageButton
-        android:id="@+id/straw_capture"
+    <ImageView
+        android:id="@+id/vegiview"
         android:layout_width="200dp"
         android:layout_height="261dp"
         android:layout_marginTop="80dp"
@@ -30,23 +30,26 @@
         android:src="@drawable/camerapic1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></ImageButton>
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
 
     <TextView
         android:id="@+id/et_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="아이디"
+        android:textColor="#ffffff"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/upload" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonUploadImage" />
 
     <TextView
         android:id="@+id/et_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="닉네임"
+        android:textColor="#ffffff"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_id" />
+
     <TextView
         android:id="@+id/et_point"
         android:layout_width="wrap_content"
@@ -55,6 +58,7 @@
         tools:ignore="MissingConstraints" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom"
@@ -66,9 +70,6 @@
         tools:layout_editor_absoluteX="-54dp">
 
 
-
-
-
     </LinearLayout>
 
     <TextView
@@ -77,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
-        android:text="장바구니 인증"
+        android:text="장바구니 인증하기"
         android:textColor="#000000"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -16,7 +16,6 @@
         <activity android:name=".VegiActivity" />
         <activity android:name=".TumrcpActivity" />
         <activity android:name=".StrawActivity" />
-        <activity android:name=".TumblerActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".TumtumActivity" />
         <activity android:name=".CertificationActivity" />
@@ -30,6 +29,7 @@
         <activity android:name=".LoginActivity"/>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MypageActivity" />
+        <activity android:name=".SearchActivity"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -59,6 +59,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <uses-sdk tools:overrideLibrary="org.opencv,com.googlecode.tesseract.android" />
 

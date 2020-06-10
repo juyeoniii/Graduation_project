@@ -1,96 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".MypageActivity">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="145dp">
-
-
-        <TextView
-            android:id="@+id/mypage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="100dp"
-            android:text="MY PAGE"
-            android:layout_gravity="center"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="156dp"
-            tools:layout_editor_absoluteY="53dp" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="143dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="145dp">
 
-            <ImageButton
-                android:id="@+id/imageButton3"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:background="#FDFDFD"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/people" />
+
+            <TextView
+                android:id="@+id/mypage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="120dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="100dp"
+                android:text="MY PAGE"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                tools:layout_editor_absoluteX="156dp"
+                tools:layout_editor_absoluteY="53dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:tag="ScrollTopTag"/>
 
 
 
             <LinearLayout
-                android:layout_width="200dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="143dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/et_id"
-                    android:hint="아이디"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="30dp"
-                    />
+                <ImageButton
+                    android:id="@+id/profile_capture"
+                    android:layout_width="137dp"
+                    android:layout_height="126dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#FDFDFD"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/people" />
 
-                <TextView
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/et_name"
-                    android:hint="닉네임"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="10dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/et_point"
-                    android:hint="포인트"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="40dp"/>
+
+
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_id"
+                        android:hint="아이디"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="30dp"
+                        />
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_name"
+                        android:hint="닉네임"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="10dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_point"
+                        android:hint="포인트"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="40dp"/>
+
+
+                </LinearLayout>
+
+
 
 
             </LinearLayout>
 
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recylcerView2"
+                android:layout_width="match_parent"
+                android:layout_height="640dp"
+                android:layout_marginTop="50dp"
+                tools:layout_editor_absoluteX="745dp"
+                tools:layout_editor_absoluteY="-51dp" />
 
 
         </LinearLayout>
-
-
+    </ScrollView>
     <LinearLayout
 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="bottom"
         android:orientation="horizontal"
         android:padding="10dp"
@@ -100,11 +120,11 @@
         tools:layout_editor_absoluteX="-54dp">
 
 
-    <LinearLayout
+        <LinearLayout
 
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="bottom"
             android:orientation="horizontal"
             android:padding="10dp"
@@ -163,11 +183,10 @@
                 ></ImageButton>
 
         </LinearLayout>
-        </LinearLayout>
-
-
-
     </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</LinearLayout>

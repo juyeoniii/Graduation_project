@@ -75,7 +75,7 @@
                 android:layout_gravity="center"
                 android:background="#3A3A37"
                 android:textColor="#FFFFFF"
-                android:text="완료"
+                android:text="다음"
                 />
 
             <TextView
@@ -83,12 +83,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="아아"
+                android:textColor="#ffffff"
                 android:layout_marginBottom="40dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_name"
+                android:textColor="#ffffff"
                 android:text="닉넴"
                 />
             <TextView

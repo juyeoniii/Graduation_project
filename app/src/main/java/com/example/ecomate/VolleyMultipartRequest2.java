@@ -20,7 +20,7 @@ import java.util.Map;
  * Created by Belal on 10/24/2017.
  */
 
-public abstract class VolleyMultipartRequest extends Request<NetworkResponse> {
+public abstract class VolleyMultipartRequest2 extends Request<NetworkResponse> {
 
     private final String twoHyphens = "--";
     private final String lineEnd = "\r\n";
@@ -31,7 +31,7 @@ public abstract class VolleyMultipartRequest extends Request<NetworkResponse> {
     private Map<String, String> mHeaders;
 
 
-    public VolleyMultipartRequest(int method, String url,
+    public VolleyMultipartRequest2(int method, String url,
                                   Response.Listener<NetworkResponse> listener,
                                   Response.ErrorListener errorListener) {
         super(method, url, errorListener);
@@ -57,10 +57,6 @@ public abstract class VolleyMultipartRequest extends Request<NetworkResponse> {
         try {
             // populate text payload
 
-            Map<String, String> pt = getPoint();
-            if (pt != null && pt.size() > 0) {
-                textParse(dos, pt, getParamsEncoding());
-            }
 
             Map<String, String> user = getID();
             if (user != null && user.size() > 0) {
@@ -83,7 +79,6 @@ public abstract class VolleyMultipartRequest extends Request<NetworkResponse> {
         return null;
     }
 
-    protected abstract Map<String, String> getPoint() throws AuthFailureError;
 
     protected abstract Map<String, String> getID() throws AuthFailureError;
 

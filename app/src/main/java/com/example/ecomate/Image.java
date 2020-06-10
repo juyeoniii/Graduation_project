@@ -1,15 +1,12 @@
 package com.example.ecomate;
 
-import androidx.annotation.NonNull;
-
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
-public class Product extends ArrayList<Product> {
+public class Image extends ArrayList<Image> {
 
     private String image;
 
-    public Product(String image) {
+    public Image(String image) {
         this.image = image;
     }
 

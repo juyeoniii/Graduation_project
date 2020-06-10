@@ -119,7 +119,7 @@ public class CertificationActivity extends AppCompatActivity {
         tumblerbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CertificationActivity.this, TumtumActivity.class);
+                Intent intent = new Intent(CertificationActivity.this, TumrcpActivity.class);
 
                 String userName = et_name.getText().toString();
                 intent.putExtra("userName", userName);
@@ -136,19 +136,19 @@ public class CertificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CertificationActivity.this, SearchActivity.class);
-                startActivity(intent);
+
+                String userName = et_name.getText().toString();
+                intent.putExtra("userName", userName);
+
+                String userID = et_id.getText().toString();
+                intent.putExtra("userID", userID);
+
+                startActivityForResult(intent, REQ);
             }
         });
 
 
-
-
     }
-
-
-
-
-
 
 
     @Override

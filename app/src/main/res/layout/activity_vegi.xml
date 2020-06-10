@@ -8,8 +8,7 @@
     tools:context=".StrawActivity">
 
     <Button
-
-        android:id="@+id/upload"
+        android:id="@+id/buttonUploadImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -38,14 +37,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="아이디"
+        android:textColor="#ffffff"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/upload" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonUploadImage" />
 
     <TextView
         android:id="@+id/et_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="닉네임"
+        android:textColor="#ffffff"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_id" />
 

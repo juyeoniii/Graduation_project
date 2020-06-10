@@ -19,8 +19,8 @@
         android:weightSum="4"
         app:layout_constraintStart_toStartOf="parent"
         >
-        <ImageButton
-            android:id="@+id/imageButton3"
+        <ImageView
+            android:id="@+id/profile_capture"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
@@ -83,6 +83,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/et_id"
             android:hint="아이디"
+            android:textColor="#E2F0D9"
             android:layout_marginLeft="40dp"
             />
 
